@@ -1,0 +1,161 @@
+/*eliminamos todos los estilos de los navegadores*/
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+ /*damos forma al texto*/
+    font-family: 'Lato', sans-serif;
+    font-size: 4vw;
+    color: white;
+    text-align: center;
+}
+
+/*el corazón del final lo reducimos un poco*/
+.strip_content p i{
+   transform: scale(0.8, 0.8);
+}
+
+html,body{
+    height:100%;
+}
+
+/*damos forma al contenedor de los bloques*/
+.strips {
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+/*reglas generales para todos los bloques*/
+.strips .strip_content {
+    width: 20%;
+    position: absolute;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+/*editamos los bloques uno a uno*/
+.strips div:nth-child( 1 ){ 
+    background-color: #244F75; 
+    left: 0;
+    animation-name: move1;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+    border-right: 5px solid white;
+}
+
+.strips div:nth-child( 2 ){
+    background-color: #60BFBF; 
+    left: 20vw;
+    animation-name: move2;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    border-right: 5px solid white;
+}
+.strips div:nth-child( 3 ){ 
+    background-color: #8C4B7E; 
+    left: 40vw;
+    animation-name: move3;
+    animation-duration: 1.5s;
+    border-right: 5px solid white;
+}
+.strips div:nth-child( 4 ){ 
+    background-color: #F8BB44; 
+    left: 60vw;
+    animation-name: move4;
+    animation-duration: 2s;
+    border-right: 5px solid white;
+}
+.strips div:nth-child( 5 ){ 
+    background-color: #F24B4B; 
+    left: 80vw;
+    animation-name: move5;
+    animation-duration: 2.5s;
+}
+
+/*animaciones al iniciar la ventana del navegador*/
+
+@keyframes move1 {
+    0% {
+        -webkit-transform: translate3d(-100%, 0, 0);
+            transform: translate3d(-100%, 0, 0);
+    }
+    100% {
+         -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes move2 {
+    0% {
+        -webkit-transform: translate3d(0, -100%, 0);
+            transform: translate3d(0, -100%, 0);
+    }
+    100% {
+         -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes move3 {
+    0% {
+        -webkit-transform: translate3d(0, 100%, 0);
+            transform: translate3d(0, 100%, 0);
+    }
+    100% {
+         -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes move4 {
+    0% {
+        -webkit-transform: translate3d(0, -100%, 0);
+            transform: translate3d(0, -100%, 0);
+    }
+    100% {
+         -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes move5 {
+    0% {
+        -webkit-transform: translate3d(100%, 0, 0);
+            transform: translate3d(100%, 0, 0);
+    }
+    100% {
+         -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+    }
+}
+
+/*el efecto de transparencia que se añade delante de los bloques*/
+.strips .strip_content:before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    opacity: 0.05;
+    -webkit-transform-origin: center center;
+    transform-origin: center center;
+    -webkit-transform: skew(30deg) scaleY(1) translate(0, 0);
+    transform: skew(30deg) scaleY(1) translate(0, 0);
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/*efecto de ampliar y reducir la transparencia al colocarnos encima*/
+.strips .strip_content:hover:before {
+    cursor: pointer;
+    height: 200%;
+    width: 200%;
+}
