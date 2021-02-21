@@ -1,0 +1,274 @@
+
+---------------------------------------------OPTICA------------------------------------------
+
+--Comprobar vínculos con todas las tablas (cliente, ventas, gafas, empleados y proveedores):
+
+SELECT 
+	c.nombre AS 'Nombre cliente',
+	c.apellido1 AS 'Apellido',
+	g.marca AS 'Marca gafas',
+	p.nombre AS Proveedor,
+	e.nombre AS 'Nombre vendedor',
+	e.apellido AS 'Apellido vendedor'
+FROM cliente c
+JOIN ventas v
+	ON c.id_cliente = v.cliente_id
+JOIN gafas g
+	ON v.gafas_id = g.id_gafas
+JOIN empleados e
+	ON v.empleado_id = e.id_empleado
+JOIN proveedores p
+	ON g.proveedor_id = p.id_proveedor
+
+
+
+
+
+
+---------------------------------------------PIZZERIA--------------------------------------
+
+--De una comanda, saber, el cliente (tabla cliente), lo que pidió (tabla producto), el precio (tabla comanda), 
+--la hora de entrega (tabla reparto), el repartidor (tabla trabajador) y la tienda (tabla tienda):
+
+SELECT 
+	cl.nombre AS 'Nombre cliente', 
+	cl.apellidos AS 'Apellido cliente',
+	pr.nombre AS 'Producto', 
+	co.precio AS 'Precio total', 
+	co.data_hora AS 'Día y hora de pedido',
+	re.data_hora AS 'Día y hora de entrega', 
+	tr.nombre AS 'Repartidor', 
+	ti.nombre AS 'Tienda'
+FROM cliente cl
+JOIN comanda co
+	ON cl.id_cliente = co.cliente_id
+JOIN lista_items li
+	ON co.id_comanda = li.comanda_id
+JOIN productos pr
+	ON li.producto_id = pr.id_productos
+JOIN tiendas ti
+	ON co.tienda_id = ti.id_tienda
+JOIN repartos re 
+	ON co.reparto_id = re.id_reparto
+JOIN trabajador tr 
+	ON re.repartidor_id = tr.id_trabajador
+
+
+--Lo mismo pero sin productos, solo detalles de la comanda:
+
+SELECT 
+	cl.nombre AS 'Nombre cliente', 
+	cl.apellidos AS 'Apellido cliente',
+	co.precio AS 'Precio total', 
+	co.data_hora AS 'Día y hora de pedido', 
+	re.data_hora AS 'Día y hora de entrega', 
+	tr.nombre AS 'Repartidor', 
+	ti.nombre AS 'Tienda'
+FROM cliente cl
+JOIN comanda co
+	ON cl.id_cliente = co.cliente_id
+JOIN lista_items li
+	ON co.id_comanda = li.comanda_id
+JOIN tiendas ti
+	ON co.tienda_id = ti.id_tienda
+JOIN repartos re 
+	ON co.reparto_id = re.id_reparto
+JOIN trabajador tr 
+	ON re.repartidor_id = tr.id_trabajador
+GROUP BY cl.nombre
+
+--Comprobar el vínculo entre las tablas (Cliente, Localidad y Provincia):
+
+SELECT 
+	cl.nombre AS 'Nombre',
+	cl.apellidos AS Apellidos,
+	lo.nombre AS Localidad,
+	pr.nombre AS Provincia
+FROM cliente cl
+JOIN localidad lo
+	ON cl.localidad_id = lo.id_localidad
+JOIN provincia pr
+	ON lo.provincia_id = pr.id_provincia
+
+
+--Comprobar el vínculo entre las tablas (Productos y Categoria):
+
+SELECT 
+	p.nombre AS producto,
+	c.nombre AS categoria
+FROM productos p
+JOIN categoria c
+	ON p.categoria_id = c.id_categoria
+
+
+
+---------------------------------------------YOUTUBE--------------------------------------
+
+--Comprobar de los usuarios, qué videos han subido y qué etiquetas tienen los videos:
+
+SELECT 
+	u.nom_usuari AS 'usuario publicó', 
+	v.titulo, 
+	et.nombre AS etiqueta
+FROM usuari u
+RIGHT JOIN publicacio_video pv
+	ON u.id_usuari = pv.usuari_id
+LEFT JOIN video v
+	ON pv.video_id = v.id_video
+LEFT JOIN etiquetaje e
+	ON v.id_video = e.video_id
+LEFT JOIN etiqueta et
+	ON e.etiqueta_id = et.id_etiqueta
+
+--Título de vídeo y número de likes:
+
+SELECT v.titulo AS 'Título video', COUNT(lv.estado) AS 'numero likes'
+FROM video v
+RIGHT JOIN like_video lv 
+	ON v.id_video = lv.video_id
+WHERE lv.estado = 'like'
+GROUP BY v.id_video
+
+
+--Título de vídeo y número de dislikes:
+
+SELECT v.titulo AS 'Título video', COUNT(lv.estado) AS 'numero dislikes'
+FROM video v
+RIGHT JOIN like_video lv 
+	ON v.id_video = lv.video_id
+WHERE lv.estado = 'unlike'
+GROUP BY v.id_video
+
+
+-- Comprobar qué vídeos tienen comentarios, el usuario que comentó:
+
+SELECT 
+	v.titulo AS 'Titulo video', 
+	u.nom_usuari AS 'Usuario comentó', 
+	c.texto AS comentario
+FROM video v
+JOIN comentario c
+	ON v.id_video = c.video_id
+JOIN usuari u
+	ON u.id_usuari = c.usuario_id
+
+-- Comprobar cuantos likes tienen los comentarios:
+
+SELECT c.texto AS 'Comentario', COUNT(lc.estat) AS 'numero likes'
+FROM comentario c
+RIGHT JOIN like_comment lc 
+	ON c.id_comentario = lc.comentario_id
+WHERE lc.estat = 'like'
+GROUP BY c.id_comentario
+
+-- Comprobar Playlists, quien las ha hecho y qué vídeos contienen:
+
+SELECT p.nombre AS playlist, u.nom_usuari AS usuario, v.titulo AS 'video'
+FROM playlist p
+JOIN crea_playlist cp
+	ON p.id_playlist = cp.playlist_id
+JOIN video v
+	ON cp.video_id = v.id_video
+JOIN usuari u
+	ON u.id_usuari = p.usuario_id
+
+-- Comprobar canales quién los ha hecho, qué vídeos contienen:
+
+SELECT c.nombre AS canal, u.nom_usuari AS 'usuario', v.titulo AS video 
+FROM canal c
+JOIN canal_video cv
+	ON c.id_canal = cv.canal_id
+JOIN video v
+	ON cv.video_id = v.id_video
+JOIN usuari u
+	ON c.usuari_id = u.id_usuari
+
+-- Comprobar suscriptores del canal:
+
+SELECT c.nombre AS canal, u.nom_usuari AS suscriptor
+FROM canal c
+JOIN suscripcio_canal sc
+	ON c.id_canal = sc.canal_id
+JOIN usuari u
+	ON sc.usuari_id = u.id_usuari
+
+
+---------------------------------------------SPOTIFY--------------------------------------
+
+--Comprobamos los usuarios premium que pagan con paypal y los que pagan con tarjeta de credito
+
+SELECT 
+	u.nombre AS 'usuario paypal', 
+	p.fecha_pago AS 'Próxima renovación', 
+	pp.usuario_paypal AS 'usuario paypal'
+FROM usuario u
+JOIN premium p
+	ON u.premium_id = p.id_premium
+JOIN forma_pago fp
+	ON p.fpago_id = fp.id_fpago
+JOIN paypal pp
+	ON fp.paypal_id = pp.id_paypal
+
+SELECT 
+	u.nombre AS 'usuario tarjeta crédito', 
+	p.fecha_pago AS 'Próxima renovación', 
+	tc.num_tarja AS 'número de tarjeta'
+FROM usuario u
+JOIN premium p
+	ON u.premium_id = p.id_premium
+JOIN forma_pago fp
+	ON p.fpago_id = fp.id_fpago
+JOIN tcredito tc
+	ON fp.tcredito_id = tc.id_tcredito
+
+-- Comprobamos en las playlist, el usuario que la creo, si está o no activa, qué canciones tienen, de qué album son y cual es el artista:
+
+SELECT 
+	u.nombre AS usuario, 
+	p.titulo AS playlist, 
+	p.activa, 
+	c.titulo AS cancion, 
+	a.titulo AS album, 
+	art.nombre AS artista
+FROM playlist p
+JOIN usuario u
+	ON p.usuario_id = u.id_usuario
+JOIN subir_cancion sc
+	ON p.id_playlist = sc.playlist_id
+JOIN cancion c
+	ON sc.cancion_id = c.id_cancion
+JOIN album a
+	ON c.album_id = a.id_album
+JOIN artista art
+	ON a.artista_id = art.id_artista
+
+
+-- Comprobamos de una canción, cuántos favoritos tiene, quien es el artista y con quién está relacionado:
+
+
+SELECT c.titulo AS cancion, COUNT(cf.id_cf) AS favoritos, art.nombre AS artista
+FROM cancion c
+JOIN album a
+	ON c.album_id = a.id_album
+JOIN artista art
+	ON a.artista_id = art.id_artista
+JOIN cancion_fav cf
+	ON c.id_cancion = cf.cancion_id
+GROUP BY c.titulo
+
+-- Comprobamos con quien está relacionado cada artista y quien le sigue
+
+SELECT 
+	a1.nombre AS artista, 
+	a2.nombre AS 'artista relacionado',
+	u.nombre AS 'seguidor'
+FROM artista a1
+LEFT JOIN artista_rel ar1
+	ON a1.id_artista = ar1.id_art1
+LEFT JOIN artista a2
+	ON ar1.id_art2 = a2.id_artista
+LEFT JOIN sigue_artista sa
+	ON a1.id_artista = sa.artista_id
+LEFT JOIN usuario u
+	ON sa.usuario_id = u.id_usuario
+	
