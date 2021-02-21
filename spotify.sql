@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 21-02-2021 a las 13:47:58
+-- Tiempo de generación: 21-02-2021 a las 18:27:06
 -- Versión del servidor: 5.5.24-log
 -- Versión de PHP: 5.4.3
 
@@ -371,74 +371,74 @@ INSERT INTO `usuario` (`id_usuario`, `nombre`, `email`, `password`, `data_naix`,
 -- Filtros para la tabla `album`
 --
 ALTER TABLE `album`
-  ADD CONSTRAINT `album_ibfk_1` FOREIGN KEY (`artista_id`) REFERENCES `artista` (`id_artista`);
+  ADD CONSTRAINT `album_ibfk_2` FOREIGN KEY (`artista_id`) REFERENCES `artista` (`id_artista`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `album_fav`
 --
 ALTER TABLE `album_fav`
-  ADD CONSTRAINT `album_fav_ibfk_1` FOREIGN KEY (`album_id`) REFERENCES `album` (`id_album`),
-  ADD CONSTRAINT `album_fav_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id_usuario`);
+  ADD CONSTRAINT `album_fav_ibfk_4` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `album_fav_ibfk_3` FOREIGN KEY (`album_id`) REFERENCES `album` (`id_album`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `artista_rel`
 --
 ALTER TABLE `artista_rel`
-  ADD CONSTRAINT `artista_rel_ibfk_1` FOREIGN KEY (`id_art1`) REFERENCES `artista` (`id_artista`),
-  ADD CONSTRAINT `artista_rel_ibfk_2` FOREIGN KEY (`id_art2`) REFERENCES `artista` (`id_artista`);
+  ADD CONSTRAINT `artista_rel_ibfk_4` FOREIGN KEY (`id_art2`) REFERENCES `artista` (`id_artista`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `artista_rel_ibfk_3` FOREIGN KEY (`id_art1`) REFERENCES `artista` (`id_artista`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `cancion`
 --
 ALTER TABLE `cancion`
-  ADD CONSTRAINT `cancion_ibfk_1` FOREIGN KEY (`album_id`) REFERENCES `album` (`id_album`);
+  ADD CONSTRAINT `cancion_ibfk_2` FOREIGN KEY (`album_id`) REFERENCES `album` (`id_album`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `cancion_fav`
 --
 ALTER TABLE `cancion_fav`
-  ADD CONSTRAINT `cancion_fav_ibfk_1` FOREIGN KEY (`cancion_id`) REFERENCES `cancion` (`id_cancion`),
-  ADD CONSTRAINT `cancion_fav_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id_usuario`);
+  ADD CONSTRAINT `cancion_fav_ibfk_4` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `cancion_fav_ibfk_3` FOREIGN KEY (`cancion_id`) REFERENCES `cancion` (`id_cancion`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `forma_pago`
 --
 ALTER TABLE `forma_pago`
-  ADD CONSTRAINT `forma_pago_ibfk_1` FOREIGN KEY (`tcredito_id`) REFERENCES `tcredito` (`id_tcredito`),
-  ADD CONSTRAINT `forma_pago_ibfk_2` FOREIGN KEY (`paypal_id`) REFERENCES `paypal` (`id_paypal`);
+  ADD CONSTRAINT `forma_pago_ibfk_4` FOREIGN KEY (`paypal_id`) REFERENCES `paypal` (`id_paypal`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `forma_pago_ibfk_3` FOREIGN KEY (`tcredito_id`) REFERENCES `tcredito` (`id_tcredito`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `playlist`
 --
 ALTER TABLE `playlist`
-  ADD CONSTRAINT `playlist_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id_usuario`);
+  ADD CONSTRAINT `playlist_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `premium`
 --
 ALTER TABLE `premium`
-  ADD CONSTRAINT `premium_ibfk_1` FOREIGN KEY (`fpago_id`) REFERENCES `forma_pago` (`id_fpago`);
+  ADD CONSTRAINT `premium_ibfk_2` FOREIGN KEY (`fpago_id`) REFERENCES `forma_pago` (`id_fpago`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `sigue_artista`
 --
 ALTER TABLE `sigue_artista`
-  ADD CONSTRAINT `sigue_artista_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id_usuario`),
-  ADD CONSTRAINT `sigue_artista_ibfk_2` FOREIGN KEY (`artista_id`) REFERENCES `artista` (`id_artista`);
+  ADD CONSTRAINT `sigue_artista_ibfk_4` FOREIGN KEY (`artista_id`) REFERENCES `artista` (`id_artista`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `sigue_artista_ibfk_3` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `subir_cancion`
 --
 ALTER TABLE `subir_cancion`
-  ADD CONSTRAINT `subir_cancion_ibfk_1` FOREIGN KEY (`cancion_id`) REFERENCES `cancion` (`id_cancion`),
-  ADD CONSTRAINT `subir_cancion_ibfk_2` FOREIGN KEY (`playlist_id`) REFERENCES `playlist` (`id_playlist`),
-  ADD CONSTRAINT `subir_cancion_ibfk_3` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id_usuario`);
+  ADD CONSTRAINT `subir_cancion_ibfk_6` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `subir_cancion_ibfk_4` FOREIGN KEY (`cancion_id`) REFERENCES `cancion` (`id_cancion`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `subir_cancion_ibfk_5` FOREIGN KEY (`playlist_id`) REFERENCES `playlist` (`id_playlist`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`premium_id`) REFERENCES `premium` (`id_premium`);
+  ADD CONSTRAINT `usuario_ibfk_2` FOREIGN KEY (`premium_id`) REFERENCES `premium` (`id_premium`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
