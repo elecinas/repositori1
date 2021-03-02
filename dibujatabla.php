@@ -1,36 +1,61 @@
 <?php
 
+include("conexionbd.php");
+
 class Tabla {
 
-    //Atributos
-    private $contenido_tabla = array();
+    //variables
+    private $instanciaBD;
 
-    //Constructor
-    public function __construct($cont_tab) {
-        $this->contenido_tabla = $cont_tab;
+    //constructor
+    public function __construct() {
+        $this->instanciaBD = new MySQL();
+        $this->instanciaBD->conectar();
     }
 
-    public function graficar() {
-        print_r($this->contenido_tabla->fetch_array());
-        if(!empty($this->contenido_tabla)){echo 'La variable contiene la tabla';};
-        echo '<table class="tabla_compra">';
-        echo '<tr><th>nombre</th><th>precio</th><th>cantidad</th></tr>';
-        
-        while ($reg = $this->contenido_tabla->fetch_array()) {
-            var_dump($reg);
-            echo '<tr>';
-            echo '<td>';
-            echo $reg['Nombre'];
-            echo '</td>';
-            echo '<td>';
-            echo $reg['Precio'];
-            echo '</td>';
-            echo '<td>';
-            echo $reg['Cantidad'];
-            echo '</td>';
-            echo '</tr>';
+    //funciones
+    public function consultaBD($cons) {
+        $consultaselect = $this->instanciaBD->consultar($cons);
+        if ($consultaselect == true) {
+            echo '<table class="tabla_compra">';
+            echo '<tr><th>nombre</th><th>precio</th><th>cantidad</th><th>modificar</th><th>eliminar</th></tr>';
+            while ($reg = $this->instanciaBD->obtenerconsulta()) {
+                echo '<tr>';
+                echo '<td>';
+                echo $reg['Nombre'];
+                echo '</td>';
+                echo '<td>';
+                echo $reg['Precio'];
+                echo '</td>';
+                echo '<td>';
+                echo $reg['Cantidad'];
+                echo '</td>';
+                echo '<td>';
+                echo '<form method="post" action="modificar.php">';
+                echo '<input type="hidden" name="id_producto" value="'.$reg['id_compra'].'">';
+                echo '<input type="hidden" name="nombre" value="'.$reg['Nombre'].'">';
+                echo '<input type="submit" value="modificar">';
+                echo '</form>';
+                echo '</td>';
+                echo '<td>';
+                echo '<form method="post" action="index.php">';
+                echo '<input type="hidden" name="id_producto" value="'.$reg['id_compra'].'">';
+                echo '<input type="submit" value="eliminar">';
+                echo '</form>';
+                echo '</td>';
+                echo '</tr>';
+            }
+            echo '</table>';
         }
-        echo '</table>';
+        $this->instanciaBD->desconectar();
+    }
+    
+    public function insercionBD($cons) {
+        $consultaselect = $this->instanciaBD->consultar($cons);
+        /*if ($consultaselect == true) {
+            echo 'se ha hecho el ingreso';
+        }*/
+        $this->instanciaBD->desconectar();
     }
 
 }

@@ -1,21 +1,30 @@
 <?php
-class Conexion {
-    /*DECLARACION DE VARIABLES*/
-    private $conexion;
-    private static $_instancia;
-    private $host = 'localhost';
-    private $user = 'root';
-    private $password = '';
-    private $database = 'sprint_8_compra';
-    
-    /*CONSTRUCTOR*/
-    private function __construct()
-    {
-        $this->conexion = new mysqli($this->host, $this->user, $this->password, $this->database);
-        if(mysqli_connect_error())
-        {
-            trigger_error("No se pudo conectar a la base de datos: " . mysql_connect_error(),E_USER_ERROR);
-        }
-    }
-}
 
+class MySQL {
+
+    private $conexion;
+    private $consulta;
+    private $resultado;
+
+    public function conectar() {
+        $this->conexion = new mysqli("localhost", "root", "", "sprint_8_compra");
+        if ($this->conexion->connect_error)
+            die('Problemas de conexión con la base de datos');
+    }
+
+    public function consultar($cons) {
+        $this->consulta = $this->conexion->query($cons)
+                or die($this->consulta->error);
+        return $this->consulta;
+    }
+
+    public function obtenerconsulta() {
+        $this->resultado = $this->consulta->fetch_array();
+        return $this->resultado;
+    }
+    
+    public function desconectar(){
+        $this->conexion->close();
+    }
+
+}
