@@ -59,4 +59,6 @@ Route::get('agenda/{mes}/{ano}', function ($mes, $ano) {
     return "Viendo la agenda de $mes de $ano";
 });
 
+use App\Http\Controllers\TiendaController;
+
 Route::get('tienda/productos/{id}', 'App\Http\Controllers\TiendaController@producto');
