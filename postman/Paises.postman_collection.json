@@ -1,0 +1,278 @@
+{
+	"info": {
+		"_postman_id": "3336b0d3-c9c7-4f52-bb4c-3b0cd0cc009c",
+		"name": "Paises",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET/paises/PaisController@index",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/it_academy/sprint_9_tasca/public/paises",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"it_academy",
+						"sprint_9_tasca",
+						"public",
+						"paises"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "POST/paises/PaisController@store",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/it_academy/sprint_9_tasca/public/paises",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"it_academy",
+								"sprint_9_tasca",
+								"public",
+								"paises"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Wed, 10 Mar 2021 16:41:41 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.46 (Win64) OpenSSL/1.1.1h PHP/8.0.2"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.0.2"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "laravel_session=eyJpdiI6ImlqVVp1N3pyVGZNSzBtSENOMnc5NlE9PSIsInZhbHVlIjoiRTFzSTJxR2l0aEl5dTBzVFZkeW9TemJibXpZd200Yko2azRvV2huOFY1eXBWS29DOGdBOHNwL1lRWDVRYmw5OVNhUmlyVFhHYmZIUGtleUo2VnJ4VTlwMFZja3ZSbVgzKzFxT2EzZEpSa2NoQjUxa3BDZHJhUHhiODNuajlRZUEiLCJtYWMiOiJkY2NkOGY1ZTZkNDNmOWUxMDgzZDkyMWYyMmE4NGMwNGM5NTU4ZGQ1NmJiMGZkYTYxZDFkMTI4MmM4ODkxMmE0In0%3D; expires=Wed, 10-Mar-2021 18:41:41 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
+						},
+						{
+							"key": "Content-Length",
+							"value": "3317"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=UTF-8"
+						}
+					],
+					"cookie": [],
+					"body": "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"\"><meta name=\"author\" content=\"Mark Otto, Jacob Thornton, and Bootstrap contributors\"><title>Tasca Srint 9 - Laravel</title><link rel=\"canonical\" href=\"https://getbootstrap.com/docs/5.0/examples/navbar-fixed/\">\n<!--CSS BOOTSTRAP-->\n<link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl\" crossorigin=\"anonymous\">\n<!-- Favicons -->\n<link rel=\"icon\" href=\"../public/favicon.ico\">\n<!-- Custom styles for this template -->\n<link href=\"navbar-top-fixed.css\" rel=\"stylesheet\">\n    \n</head>\n<body>\n    <nav class=\"navbar navbar-expand-md navbar-dark fixed-top bg-dark\">\n        <div class=\"container-fluid\">\n            <a class=\"navbar-brand\" href=\"#\">#</a>\n            <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#navbarCollapse\" aria-controls=\"navbarCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n                <span class=\"navbar-toggler-icon\"></span>\n            </button>\n            <div class=\"collapse navbar-collapse\" id=\"navbarCollapse\">\n                <ul class=\"navbar-nav me-auto mb-2 mb-md-0\">\n                    <li class=\"nav-item\">\n                        <a class=\"nav-link active\" aria-current=\"page\" href=\"#\">Inicio</a>\n                    </li>\n                    <li class=\"nav-item\">\n                        <a class=\"nav-link active\" href=\"#\">Paises</a>\n                    </li>\n                    <li class=\"nav-item\">\n                        <a class=\"nav-link active\" href=\"#\" tabindex=\"-1\" aria-disabled=\"true\">Saludo</a>\n                    </li>\n                    <li class=\"nav-item\">\n                        <a class=\"nav-link disabled\" href=\"#\" tabindex=\"-1\" aria-disabled=\"true\">Off</a>\n                    </li>\n                </ul>\n                <form class=\"d-flex\">\n                    <input class=\"form-control me-2\" type=\"search\" placeholder=\"Search\" aria-label=\"Search\">\n                    <button class=\"btn btn-outline-success\" type=\"submit\">Buscar</button>\n                </form>\n            </div>\n        </div>\n    </nav>\n    <main class=\"container\">\n        <div class=\"bg-light p-5 rounded\">\n            <h1>Paises</h1>\n            <p class=\"lead\">Enseñar Store (POST)</p>\n            <!--<a class=\"btn btn-lg btn-primary\" href=\"#\" role=\"button\">Ver &raquo;</a>-->\n            \n        </div>\n    </main>\n    <!--BOOTSTRAP-->\n    <script src=\"https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js\" integrity=\"sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi\" crossorigin=\"anonymous\"></script>\n    <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js\" integrity=\"sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG\" crossorigin=\"anonymous\"></script>\n</body>\n</html>"
+				}
+			]
+		},
+		{
+			"name": "GET/paises/Francia/PaisController@show",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/it_academy/sprint_9_tasca/public/paises/Francia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"it_academy",
+						"sprint_9_tasca",
+						"public",
+						"paises",
+						"Francia"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT/paises/Francia/PaisController@update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/it_academy/sprint_9_tasca/public/paises/Francia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"it_academy",
+						"sprint_9_tasca",
+						"public",
+						"paises",
+						"Francia"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE/paises/Francia/PaisController@destroy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/it_academy/sprint_9_tasca/public/paises/Francia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"it_academy",
+						"sprint_9_tasca",
+						"public",
+						"paises",
+						"Francia"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET/paises/Francia/departamentos/DepartamentoController@index",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/it_academy/sprint_9_tasca/public/paises/Francia/departamentos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"it_academy",
+						"sprint_9_tasca",
+						"public",
+						"paises",
+						"Francia",
+						"departamentos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST/paises/Francia/departamentos/DepartamentoController@store",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/it_academy/sprint_9_tasca/public/paises/Francia/departamentos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"it_academy",
+						"sprint_9_tasca",
+						"public",
+						"paises",
+						"Francia",
+						"departamentos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET/paises/Francia/departamentos/001/DepartamentoController@show",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/it_academy/sprint_9_tasca/public/paises/Francia/departamentos/001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"it_academy",
+						"sprint_9_tasca",
+						"public",
+						"paises",
+						"Francia",
+						"departamentos",
+						"001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT/paises/Francia/departamentos/001/DepartamentoController@update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/it_academy/sprint_9_tasca/public/paises/Francia/departamentos/001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"it_academy",
+						"sprint_9_tasca",
+						"public",
+						"paises",
+						"Francia",
+						"departamentos",
+						"001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE/paises/Francia/departamentos/001/DepartamentoController@destroy",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/it_academy/sprint_9_tasca/public/paises/Francia/departamentos/001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"it_academy",
+						"sprint_9_tasca",
+						"public",
+						"paises",
+						"Francia",
+						"departamentos",
+						"001"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

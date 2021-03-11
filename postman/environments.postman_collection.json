@@ -1,0 +1,43 @@
+{
+	"info": {
+		"_postman_id": "a92b03d2-69d7-4abf-8e63-b33ba46e7076",
+		"name": "environments",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "{{IP}}{{port}}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{IP}}{{port}}/paises",
+					"host": [
+						"{{IP}}{{port}}"
+					],
+					"path": [
+						"paises"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{IP}}{{port}}/paises",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{IP}}{{port}}/paises",
+					"host": [
+						"{{IP}}{{port}}"
+					],
+					"path": [
+						"paises"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

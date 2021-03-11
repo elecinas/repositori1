@@ -1,0 +1,51 @@
+{
+	"info": {
+		"_postman_id": "09e62174-6822-4132-b5bd-5ace1316b9a4",
+		"name": "saludos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost/it_academy/sprint_9_tasca/public/saludo/ramon",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/it_academy/sprint_9_tasca/public/saludo/ramon",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"it_academy",
+						"sprint_9_tasca",
+						"public",
+						"saludo",
+						"ramon"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/it_academy/sprint_9_tasca/public/saludo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/it_academy/sprint_9_tasca/public/saludo",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"it_academy",
+						"sprint_9_tasca",
+						"public",
+						"saludo"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
