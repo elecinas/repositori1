@@ -64,5 +64,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'domingo' => \App\Http\Middleware\DomingoMiddleware::class,
+        'whatdate' =>\App\Http\Middleware\WhatDate2::class,
     ];
 }

@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class WhatDate
+class WhatDate2
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class WhatDate
      */
     public function handle(Request $request, Closure $next)
     {
-        echo '<h5>Middleware a nivel global: ' . date("d/m/y") . '</h5>';
+        echo '<h5>Middleware de controlador: ' . date("d/m/y") . '</h5>';
         return $next($request);
     }
 }
