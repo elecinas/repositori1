@@ -32,8 +32,9 @@
             <td>{{ $product->price }}</td>
             <td>
                 <div class="btn-group" role="group">
-                    <form>
-                    <button type="button" href="" class="btn btn-warning">Modify</button>
+                    <form method="GET" action="{{ route('product.edit', $product->id) }}">
+                        @csrf
+                    <button type="submit" href="" class="btn btn-warning">Modify</button>
                     </form>
                     <form method="POST" action="{{ route('product.delete', $product->id) }}">
                         @csrf

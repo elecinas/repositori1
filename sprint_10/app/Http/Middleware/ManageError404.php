@@ -16,6 +16,7 @@ class ManageError404 {
      * @return mixed
      */
     public function handle(Request $request, Closure $next, Exception $exception) {
+        
         App::error(function($exception, $code) {
             if ($code == 404) {
                 return Response::view('error404', array(), 404);
