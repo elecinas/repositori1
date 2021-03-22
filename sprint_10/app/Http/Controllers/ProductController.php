@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 
 class ProductController extends Controller {
-    
-    public function __construct(){
+
+    public function __construct() {
         $this->middleware('whatdate');
     }
 
@@ -38,7 +38,7 @@ class ProductController extends Controller {
             'description' => 'required|max:255',
             'price' => 'required|max:20'
         ]);
-        
+
         $product = Product::create($request->all());
 
         return view('catalog/index');
@@ -54,11 +54,11 @@ class ProductController extends Controller {
     public function update() {
         return 'method update (put)';
     }
-    
-    public function delete($product) {
-        //$product->delete();
-       // return redirect()->route('product.list');
-        return $product;
+
+    public function delete($id) {
+        $product = Product::find($id);
+        $product->delete();
+        return redirect()->route('product.list');
     }
 
 }

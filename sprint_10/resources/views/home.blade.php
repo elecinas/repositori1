@@ -36,7 +36,6 @@
                     <button type="button" href="" class="btn btn-warning">Modify</button>
                     </form>
                     <form method="POST" action="{{ route('product.delete', $product->id) }}">
-                        
                         @csrf
                         @method('DELETE')
                         <button type="submit" href="" class="btn btn-danger">Delete</button>
