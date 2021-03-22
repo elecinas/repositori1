@@ -2,12 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', [ProductController::class, 'home'])->name('product.list');
 
-Route::get('/login', function () {
-    return view('auth/login');
-});
+/**User**/
+
+Route::get('/login', [UserController::class, 'index'])->name('user.index');
+Route::post('/login', [UserController::class, 'registro'])->name('user.registro');
 
 Route::get('/logout', function () {
     return 'Logout usuari';

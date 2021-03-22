@@ -17,6 +17,10 @@
                 min-height: 75rem;
                 padding-top: 4.5rem;
             }
+
+            span {
+                color: white;
+            }
             .bd-placeholder-img {
                 font-size: 1.125rem;
                 text-anchor: middle;
@@ -56,10 +60,13 @@
                             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Off</a>
                         </li>
                     </ul>
-                    <form class="d-flex">
+                    <div class="d-flex">
+                        <span color="white"> {{session('c_nombre')}}</span>
+                    </div>
+                    <!--<form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Buscar</button>
-                    </form>
+                    </form>-->
                 </div>
             </div>
         </nav>
@@ -67,7 +74,7 @@
             <div class="bg-light p-5 rounded">
                 @yield('content')
             </div>
-            <a class="btn btn-lg btn-primary" href="" role="button">Error 404 &raquo;</a>
+           <!-- <a class="btn btn-lg btn-primary" href="" role="button">Error 404 &raquo;</a>-->
         </main>
         <!--BOOTSTRAP-->
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
