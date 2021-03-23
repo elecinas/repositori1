@@ -44,15 +44,27 @@ class ProductController extends Controller {
         return view('catalog/index');
     }
 
-    public function edit($p) {
-        $producto = $p;
-        return view('catalog/edit')
+    public function edit($id) {
+        $product = Product::find($id);
+        //dd($product);
+        return view('catalog/edit', compact('product'));
+        /*return view('catalog/edit')
                         ->with('producto', $producto)
-                        ->with('mensaje', 'Se edita el producto: ');
+                        ->with('mensaje', 'Se edita el producto: ');*/
     }
 
-    public function update() {
-        return 'method update (put)';
+    public function update(Request $request, $id) {
+        $this->validate($request, [
+            'name' => 'required|max:20',
+            'product_code' => 'required|max:5',
+            'description' => 'required|max:255',
+            'price' => 'required|max:20'
+        ]);
+        $product = Product::find($id);
+        $product->update($request->all());
+        //dd($product);
+        return redirect()->route('product.index');
+        //return 'method update (put)';
     }
 
     public function delete($id) {
