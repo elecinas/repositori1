@@ -17,7 +17,7 @@ Route::get('/logout', function () {
 
 
 //Enseña lista del catalogo
-Route::get('/catalog', [ProductController::class, 'index'])->name('product.index');
+Route::get('/catalog', [ProductController::class, 'home'])->name('product.index');
 
 //Enseña un producto concreto del catalogo
 Route::get('catalog/show/{id}', [ProductController::class, 'show'])->name('product.show');
