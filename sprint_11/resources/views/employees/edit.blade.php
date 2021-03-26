@@ -46,16 +46,28 @@
 
     <div class="form-group">
         <label for="position">Puesto</label>
+        
         <select class="form-select" name="position_id">
+            @foreach($positions as $position)
+                <option value="{{$position->id}}" 
+                  @if ($position->id == old('position_id', $employee->position_id))     
+                    selected
+                  @endif  
+                >{{$position->name}}</option>
+            @endforeach
+        </select>
+        
+        
+        <!--<select class="form-select" name="position_id">
             @foreach($positions as $position)
             <option value="{{$position->id}}" selected>{{$position->name}}</option>
             @endforeach
-        </select>
+        </select>-->
     </div> 
     @error('position')
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror
-
+    <br>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
