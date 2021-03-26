@@ -15,6 +15,9 @@ Route::post('/login', [UserController::class, 'registro'])->name('user.registro'
 //Enseña lista de empleados
 Route::get('/employees', [EmployeeController::class, 'list'])->name('employee.index');
 
+//Enseña los empleados de un puesto
+Route::post('/employees/inposition', [EmployeeController::class, 'empleadosPuesto'])->name('employee.inposition');
+
 //Añade un empleado a la BD
 Route::get('employees/create', [EmployeeController::class, 'create'])->name('employee.create');
 Route::post('employees', [EmployeeController::class, 'store'])->name('employee.store');

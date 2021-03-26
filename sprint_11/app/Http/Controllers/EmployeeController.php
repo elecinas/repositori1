@@ -9,7 +9,22 @@ use App\Models\Position;
 class EmployeeController extends Controller {
 
     public function home() {
-        return view('home');
+        $positions = Position::all();
+        return view('home')
+                        ->with('positions', $positions);
+    }
+
+    public function empleadosPuesto(Request $request) {
+        $request->validate([
+            'position_id' => 'required'
+        ]);
+        $id = $request->position_id;
+        //dd($id);
+        $position = Position::find($id)->name;
+        $employees = Position::find($id)->employees;
+        return view('employees/inposition')
+                    ->with('employees', $employees)
+                    ->with('position', $position);
     }
 
     public function list() {
@@ -22,7 +37,7 @@ class EmployeeController extends Controller {
         return view('employees/create')
                         ->with('positions', $positions);
     }
-    
+
     public function store(Request $request) {
         $request->validate([
             'name' => 'required|max:20',
@@ -31,7 +46,7 @@ class EmployeeController extends Controller {
             'phone' => 'required|max:12',
             'position_id' => 'required'
         ]);
-        
+
         Employee::create($request->all());
 
         return redirect()->route('employee.index');
