@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Match;
+use App\Models\Team;
 
 class Stadium extends Model
 {
     use HasFactory;
+    protected $table = 'stadiums';
     
     protected $guarded = [''];
     public $timestamps = false;
