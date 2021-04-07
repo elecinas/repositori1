@@ -16,7 +16,7 @@ class CreateTeamsTable extends Migration
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->year('foundation_year');
+            $table->integer('foundation_year');
             $table->unsignedBigInteger('stadium_id');
             $table->foreign('stadium_id')->references('id')->on('stadiums')->onDelete('cascade');
             $table->timestamps();

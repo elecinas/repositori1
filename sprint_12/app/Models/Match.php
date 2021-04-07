@@ -13,7 +13,7 @@ class Match extends Model {
 
     public function stadium() {
 
-        return $this->belongsTo(Stadium::class);
+        return $this->belongsTo(Stadium::class, 'stadium_id', 'id');
     }
 
     public function scores() {

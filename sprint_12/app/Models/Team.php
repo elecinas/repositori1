@@ -13,7 +13,7 @@ class Team extends Model {
 
     public function stadium() {
 
-        return $this->belongsTo(Stadium::class);
+        return $this->belongsTo(Stadium::class, 'stadium_id', 'id');
     }
 
     public function matches() {
@@ -23,6 +23,6 @@ class Team extends Model {
     
     public function scores() {
 
-        return $this->hasMany(Match::class);
+        return $this->hasMany(Score::class);
     }
 }
