@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Match;
+use App\Models\Encuentro;
 use App\Models\Stadium;
 use App\Models\Score;
 
@@ -14,9 +14,9 @@ class Team extends Model {
 
     protected $guarded = [''];
     
-    public function matches() {
+    public function encuentros() {
 
-       // return $this->hasMany(Match::class);
+        return $this->hasMany(Encuentro::class, 'match_id', 'id');
     }
 
     public function stadium() {
@@ -26,6 +26,6 @@ class Team extends Model {
     
     public function scores() {
 
-       // return $this->hasMany(Score::class);
+        return $this->hasMany(Score::class);
     }
 }

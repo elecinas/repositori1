@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Team;
-use App\Models\Match;
+use App\Models\Encuentro;
 
 class Score extends Model
 {
@@ -18,8 +18,8 @@ class Score extends Model
         return $this->belongsTo(Team::class);
     }
     
-    public function match() {
+    public function encuentro() {
 
-       // return $this->belongsTo(Match::class);
+        return $this->belongsTo(Encuentro::class, 'match_id', 'id');
     }
 }
