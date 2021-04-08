@@ -14,9 +14,14 @@ class Team extends Model {
 
     protected $guarded = [''];
     
-    public function encuentros() {
+    public function encuentros1() {
 
-        return $this->hasMany(Encuentro::class, 'match_id', 'id');
+        return $this->hasMany(Encuentro::class, 'team_1');
+    }
+    
+    public function encuentros2() {
+
+        return $this->hasMany(Encuentro::class, 'team_2');
     }
 
     public function stadium() {
