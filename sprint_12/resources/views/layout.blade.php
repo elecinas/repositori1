@@ -48,13 +48,16 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
                         <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{{route('home')}}">Inicio</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{route('calendar.list')}}">Calendario</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="">Clasificación</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{route('calendar.list')}}" tabindex="-1" aria-disabled="true">Equipos</a>
+                            <a class="nav-link active" href="{{route('teams.list')}}" tabindex="-1" aria-disabled="true">Equipos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>

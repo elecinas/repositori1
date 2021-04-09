@@ -2,12 +2,12 @@
 @section('title', 'titulo')
 @section('content')
 
-<h1>Calendario de partidos</h1>
+<h1>Listado de equipos</h1>
 <p class="lead"></p>
 
 <div class="row">
     <div class="col-md-3 m-4">
-        <a class="btn btn-success" href="">Añadir partido</a>
+        <a class="btn btn-success" href="">Añadir equipo</a>
     </div>
 </div>
 
@@ -15,21 +15,19 @@
     <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Día</th>
-            <th scope="col">Lugar</th>
-            <th scope="col">Primer equipo</th>
-            <th scope="col">Segundo equipo</th>
+            <th scope="col">Equipo</th>
+            <th scope="col">Año de fundación</th>
+            <th scope="col">Estadio</th>
             <th scope="col">Acciones</th>
         </tr>
     </thead>
     <tbody>
-        @foreach($encuentros as $encuentro)
+        @foreach($teams as $team)
         <tr>
-            <th scope="row">{{ $encuentro->id }}</th>
-            <td>{{ $encuentro->programacion_partido }}</td>
-            <td>{{ $encuentro->stadium->name }}</td>
-            <td>{{ $encuentro->team_1->name }}</td>
-            <td>{{ $encuentro->team_2->name }}</td>
+            <th scope="row">{{ $team->id }}</th>
+            <td>{{ $team->name }}</td>
+            <td>{{ $team->stadium->name }}</td>
+            <td>{{ $team->foundation_year }}</td>
             <td>
                 <div class="btn-group" role="group">
                     <form method="GET" action="">

@@ -25,6 +25,8 @@ class PartidosController extends Controller
     }
     
     public function teams_list(){
-        return view('teams');//crear view: teams.blade.php
+        $teams = Team::all();
+        return view('teams')
+            ->with('teams', $teams);//crear view: teams.blade.php
     }
 }
