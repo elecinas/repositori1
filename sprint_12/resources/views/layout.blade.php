@@ -18,9 +18,13 @@
                 padding-top: 4.5rem;
             }
 
-            span {
-                color: white;
-            }
+            span {color: white;}
+            
+            a {text-decoration: none;}
+            a:link { color: white;}
+            a:visited { color: white;}
+            a:hover { color: white;}
+            
             .bd-placeholder-img {
                 font-size: 1.125rem;
                 text-anchor: middle;
@@ -54,7 +58,7 @@
                             <a class="nav-link active" aria-current="page" href="{{route('calendar.list')}}">Calendario</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="">Clasificación</a>
+                            <a class="nav-link active" href="{{route('classification.list')}}">Clasificación</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="{{route('teams.list')}}" tabindex="-1" aria-disabled="true">Equipos</a>
@@ -65,6 +69,17 @@
                     </ul>
                     <div class="d-flex">
                         <span color="white">{{session('c_nombre')}}</span>
+                        @if (Route::has('login'))
+                        @auth
+                        <a class="ms-3" href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">Dashboard</a>
+                        @else
+                        <a class="ms-3" href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
+
+                        @if (Route::has('register'))
+                        <a class="ms-3" href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
+                        @endif
+                        @endauth
+                        @endif
                     </div>
                     <!--<form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -77,7 +92,7 @@
             <div class="bg-light p-5 rounded">
                 @yield('content')
             </div>
-           <!-- <a class="btn btn-lg btn-primary" href="" role="button">Error 404 &raquo;</a>-->
+            <!-- <a class="btn btn-lg btn-primary" href="" role="button">Error 404 &raquo;</a>-->
         </main>
         <!--BOOTSTRAP-->
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>

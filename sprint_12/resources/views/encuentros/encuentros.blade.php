@@ -17,8 +17,8 @@
             <th scope="col">#</th>
             <th scope="col">Día</th>
             <th scope="col">Lugar</th>
-            <th scope="col">Primer equipo</th>
-            <th scope="col">Segundo equipo</th>
+            <th scope="col">Equipo local</th>
+            <th scope="col">Equipo visitante</th>
             <th scope="col">Acciones</th>
         </tr>
     </thead>
@@ -28,8 +28,8 @@
             <th scope="row">{{ $encuentro->id }}</th>
             <td>{{ $encuentro->programacion_partido }}</td>
             <td>{{ $encuentro->stadium->name }}</td>
-            <td>{{ $encuentro->team_1->name }}</td>
-            <td>{{ $encuentro->team_2->name }}</td>
+            <td>{{ $locales->name }}</td>
+            <td>{{ $visitantes->name }}</td>
             <td>
                 <div class="btn-group" role="group">
                     <form method="GET" action="">

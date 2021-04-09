@@ -7,7 +7,7 @@
 
 <div class="row">
     <div class="col-md-3 m-4">
-        <a class="btn btn-success" href="">Añadir equipo</a>
+        <a class="btn btn-success" href="{{route('team.create')}}">Añadir equipo</a>
     </div>
 </div>
 
@@ -16,8 +16,8 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Equipo</th>
-            <th scope="col">Año de fundación</th>
             <th scope="col">Estadio</th>
+            <th scope="col">Año de fundación</th>
             <th scope="col">Acciones</th>
         </tr>
     </thead>
@@ -30,11 +30,11 @@
             <td>{{ $team->foundation_year }}</td>
             <td>
                 <div class="btn-group" role="group">
-                    <form method="GET" action="">
+                    <form method="GET" action="{{route('team.edit', $team->id)}}">
                         @csrf
                     <button type="submit" href="" class="btn btn-warning">Modificar</button>
                     </form>
-                    <form method="POST" action="">
+                    <form method="POST" action="{{route('team.delete', $team->id)}}">
                         @csrf
                         @method('DELETE')
                         <button type="submit" href="" class="btn btn-danger">Suprimir</button>
