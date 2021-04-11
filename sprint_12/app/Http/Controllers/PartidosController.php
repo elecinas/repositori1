@@ -15,7 +15,7 @@ class PartidosController extends Controller {
     }
 
     public function calendar_list() {
-        $encuentros = Encuentro::all();
+        $encuentros = Encuentro::all(); //elloquent collection, contiene elloquent models
         return view('encuentros/encuentros')
                         ->with('encuentros', $encuentros);
     }

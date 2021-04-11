@@ -28,13 +28,20 @@
             <th scope="row">{{ $encuentro->id }}</th>
             <td>{{ $encuentro->programacion_partido }}</td>
             <td>{{ $encuentro->stadium->name }}</td>
-            <td>{{ $locales->name }}</td>
-            <td>{{ $visitantes->name }}</td>
+
+            @foreach($encuentro->locales as $local)
+                <td>{{ $local->name }}</td>
+            @endforeach 
+            
+            @foreach($encuentro->visitantes as $visitante)
+                <td>{{ $visitante->name }}</td>
+            @endforeach()
+
             <td>
                 <div class="btn-group" role="group">
                     <form method="GET" action="">
                         @csrf
-                    <button type="submit" href="" class="btn btn-warning">Modificar</button>
+                        <button type="submit" href="" class="btn btn-warning">Modificar</button>
                     </form>
                     <form method="POST" action="">
                         @csrf

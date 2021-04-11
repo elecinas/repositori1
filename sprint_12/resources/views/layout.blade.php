@@ -64,13 +64,20 @@
                             <a class="nav-link active" href="{{route('teams.list')}}" tabindex="-1" aria-disabled="true">Equipos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                            <a class="nav-link disabled" href="#" tabindex="-1" 
+                               @if(Route::has('login'))
+                               @auth
+                               aria-disabled="true"
+                               @endauth
+                               @endif
+                               >Disabled</a>
                         </li>
                     </ul>
                     <div class="d-flex">
-                        <span color="white">{{session('c_nombre')}}</span>
+                        <!--<span color="white">{{session('c_nombre')}}</span>-->
                         @if (Route::has('login'))
                         @auth
+                        <span class="ms-3" class="text-sm text-gray-700 underline">{{Auth::user()->email}}</span>
                         <a class="ms-3" href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">Dashboard</a>
                         @else
                         <a class="ms-3" href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>

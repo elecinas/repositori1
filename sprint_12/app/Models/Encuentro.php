@@ -27,11 +27,11 @@ class Encuentro extends Model {
     }
 
     public function locales() {
-        return $this->belongsToMany(Team::class, 'matches', 'team_1', 'id');
+        return $this->belongsToMany(Team::class, 'matches', 'team_1', 'team_2');
     }
 
     public function visitantes() {
-        return $this->belongsToMany(Team::class, 'matches', 'team_2', 'id');
+        return $this->belongsToMany(Team::class, 'matches', 'team_2', 'team_1');
     }
 
 }
