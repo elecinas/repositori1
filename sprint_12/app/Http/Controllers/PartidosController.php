@@ -7,17 +7,22 @@ use App\Models\Encuentro;
 use App\Models\Score;
 use App\Models\Stadium;
 use App\Models\Team;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class PartidosController extends Controller {
 
+    public $role;
+    public $permission;
+    
     public function home() {
-        return view('home'); //crear view: home.blade.php
+        
+        return view('home'); 
     }
 
     public function calendar_list() {
         $encuentros = Encuentro::all(); //elloquent collection, contiene elloquent models
-        return view('encuentros/encuentros')
-                        ->with('encuentros', $encuentros);
+        return view('encuentros/encuentros', compact('encuentros'));
     }
 
     public function classification_list() {
@@ -29,7 +34,7 @@ class PartidosController extends Controller {
     public function teams_list() {
         $teams = Team::all();
         return view('teams/teams')
-                        ->with('teams', $teams); //crear view: teams.blade.php
+                        ->with('teams', $teams); 
     }
 
     public function create_team() {

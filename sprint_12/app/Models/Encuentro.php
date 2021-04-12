@@ -26,12 +26,14 @@ class Encuentro extends Model {
         return $this->hasMany(Score::class, 'match_id');
     }
 
-    public function locales() {
-        return $this->belongsToMany(Team::class, 'matches', 'team_1', 'team_2');
+    public function local() {
+        return $this->belongsTo(Team::class, 'team_1', 'id');
+        /*return $this->belongsToMany(Team::class, 'matches', 'team_1', 'team_2');*/
     }
 
-    public function visitantes() {
-        return $this->belongsToMany(Team::class, 'matches', 'team_2', 'team_1');
+    public function visitante() {
+        return $this->belongsTo(Team::class, 'team_2', 'id');
+        /*return $this->belongsToMany(Team::class, 'matches', 'team_2', 'team_1');*/
     }
 
 }

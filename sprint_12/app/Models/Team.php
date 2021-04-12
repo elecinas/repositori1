@@ -14,14 +14,14 @@ class Team extends Model {
 
     protected $guarded = [''];
     
-    public function encuentros1() {
+    public function encuentrosLocal() {
 
-        return $this->hasMany(Encuentro::class, 'team_1');
+        return $this->hasMany(Encuentro::class, 'team_1', 'id');
     }
     
-    public function encuentros2() {
+    public function encuentrosVisitante() {
 
-        return $this->hasMany(Encuentro::class, 'team_2');
+        return $this->hasMany(Encuentro::class, 'team_2', 'id');
     }
 
     public function stadium() {
