@@ -17,8 +17,8 @@ class CreateTeamsTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('foundation_year');
-            $table->unsignedBigInteger('stadium_id');
-            $table->foreign('stadium_id')->references('id')->on('stadiums')->onDelete('cascade');
+            $table->unsignedBigInteger('stadium_id')->nullable()->unique();
+            $table->foreign('stadium_id')->references('id')->on('stadiums')->onDelete('set null')->onUpdate('cascade');
             $table->timestamps();
         });
     }

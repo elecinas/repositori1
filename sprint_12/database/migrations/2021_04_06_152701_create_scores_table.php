@@ -18,9 +18,9 @@ class CreateScoresTable extends Migration
             $table->time('time', 0);
             $table->unsignedInteger('points', 0);
             $table->unsignedBigInteger('match_id');
-            $table->foreign('match_id')->references('id')->on('matches')->onDelete('cascade');
+            $table->foreign('match_id')->references('id')->on('matches')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('team_id');
-            $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
+            $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

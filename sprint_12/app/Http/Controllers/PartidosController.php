@@ -20,11 +20,76 @@ class PartidosController extends Controller {
         return view('home'); 
     }
 
+     /* CONTROLADORES DE CALENDARIO */
+    
     public function calendar_list() {
         $encuentros = Encuentro::all(); //elloquent collection, contiene elloquent models
         return view('encuentros/encuentros', compact('encuentros'));
     }
+    
+    public function create_calendar(){
+        $teams = Team::all();
+        $stadiums = Stadium::all();
+        return view('encuentros/create')
+                        ->with('teams', $teams)
+                        ->with('stadiums', $stadiums);
+    }
+    
+    public function store_calendar(Request $request){
+        $request->validate([
+            'programacion_partido' => 'required',
+            'stadium' => 'required', 
+            'local' => 'required', 
+            'visitante' => 'required'
+        ]);
+        
+        $encuentro = new Encuentro();
+        $encuentro->programacion_partido = $request->programacion_partido;
+        $encuentro->stadium_id = $request->stadium;
+        $encuentro->team_1 = $request->local;
+        $encuentro->team_2 = $request->visitante;
+        $encuentro->save();
 
+        return redirect()->route('calendar.list');
+    }
+    
+    public function edit_calendar($id){
+        $encuentro = Encuentro::find($id);
+        $teams = Team::all();
+        $stadiums = Stadium::all();
+        return view('encuentros/edit')
+                        ->with('teams', $teams)
+                        ->with('stadiums', $stadiums)
+                        ->with('encuentro', $encuentro);
+    }
+    
+    public function update_calendar(Request $request, $id){
+        $request->validate([
+            'programacion_partido' => 'required',
+            'stadium' => 'required', 
+            'local' => 'required', 
+            'visitante' => 'required'
+        ]);
+        
+        $encuentro = Encuentro::find($id);
+        $encuentro->programacion_partido = $request->programacion_partido;
+        $encuentro->stadium_id = $request->stadium;
+        $encuentro->team_1 = $request->local;
+        $encuentro->team_2 = $request->visitante;
+        $encuentro->save();
+
+        return redirect()->route('calendar.list');
+    }
+    
+    public function delete_calendar($id){
+        $encuentro = Encuentro::find($id);
+        $encuentro->delete();
+        return redirect()->route('calendar.list');
+    }
+
+    
+    /* CONTROLADORES DE RESULTADOS */
+    
     public function classification_list() {
         return view('classification'); //crear view: classification.blade.php
     }

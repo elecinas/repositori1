@@ -16,11 +16,11 @@ class CreateMatchesTable extends Migration {
             $table->id();
             $table->dateTime('programacion_partido', 0);
             $table->unsignedBigInteger('stadium_id');
-            $table->foreign('stadium_id')->references('id')->on('stadiums')->onDelete('cascade');
+            $table->foreign('stadium_id')->references('id')->on('stadiums')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('team_1');
-            $table->foreign('team_1')->references('id')->on('teams')->onDelete('cascade');
+            $table->foreign('team_1')->references('id')->on('teams')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('team_2');
-            $table->foreign('team_2')->references('id')->on('teams')->onDelete('cascade');
+            $table->foreign('team_2')->references('id')->on('teams')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

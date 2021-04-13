@@ -17,6 +17,27 @@ Route::get('/calendario', [PartidosController::class, 'calendar_list'])
         ->middleware('auth')
         ->name('calendar.list');
 
+//Crea un partido nuevo
+Route::get('/calendario/create', [PartidosController::class, 'create_calendar'])
+        ->middleware('auth')
+        ->name('calendar.create');
+Route::post('/calendario', [PartidosController::class, 'store_calendar'])
+        ->middleware('auth')
+        ->name('calendar.store');
+
+//Edita un partido
+Route::get('calendario/edit/{id}', [PartidosController::class, 'edit_calendar'])
+        ->middleware('auth')
+        ->name('calendar.edit');
+Route::put('calendario/edit/{id}', [PartidosController::class, 'update_calendar'])
+        ->middleware('auth')
+        ->name('calendar.update');
+
+//Elimina un partido
+Route::delete('calendario/{id}', [PartidosController::class, 'delete_calendar'])
+        ->middleware('auth')
+        ->name('calendar.delete');
+
 //Muestra la Clasificación
 Route::get('/classification', [PartidosController::class, 'classification_list'])
         ->middleware('auth')
