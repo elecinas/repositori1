@@ -60,6 +60,14 @@
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror
     
+    <div class="form-group mt-3">
+        <label for="result">Resultado</label>
+        <input type="text" name="result" class="form-control" id="result" value="{{ old('result', $encuentro->result) }}">
+    </div>
+    @error('result')
+    <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+    
     <br>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

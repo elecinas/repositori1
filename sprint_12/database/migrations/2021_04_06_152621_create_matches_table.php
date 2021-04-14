@@ -21,6 +21,7 @@ class CreateMatchesTable extends Migration {
             $table->foreign('team_1')->references('id')->on('teams')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('team_2');
             $table->foreign('team_2')->references('id')->on('teams')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('result')->nullable();
             $table->timestamps();
         });
     }

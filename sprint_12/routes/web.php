@@ -38,11 +38,6 @@ Route::delete('calendario/{id}', [PartidosController::class, 'delete_calendar'])
         ->middleware('auth')
         ->name('calendar.delete');
 
-//Muestra la Clasificación
-Route::get('/classification', [PartidosController::class, 'classification_list'])
-        ->middleware('auth')
-        ->name('classification.list');
-
 //Muestra los Equipos
 Route::get('/teams', [PartidosController::class, 'teams_list'])
         ->middleware('auth')

@@ -21,6 +21,7 @@ No puedes crear partidos.
             <th scope="col">Lugar</th>
             <th scope="col">Equipo local</th>
             <th scope="col">Equipo visitante</th>
+            <th scope="col">Resultado</th>
             <th scope="col">Acciones</th>
         </tr>
     </thead>
@@ -32,6 +33,7 @@ No puedes crear partidos.
             <td>{{ $encuentro->stadium->name }}</td>
             <td>{{ $encuentro->local->name }}</td>
             <td>{{ $encuentro->visitante->name }}</td>
+            <td>{{ $encuentro->result }}</td>
             
             @can('editar_partidos')
             <td>

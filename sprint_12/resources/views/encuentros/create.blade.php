@@ -44,6 +44,14 @@
     @error('local')
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror
+    <div class="form-group mt-3">
+        <label for="result">Resultado</label>
+        <input type="text" name="result" class="form-control" id="result" value="{{ old('result') }}">
+    </div>
+    @error('result')
+    <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+    
 
     <div class="form-group mt-2">
         <label for="dos">Si no escribes 2, dará error:</label>

@@ -4,16 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Encuentro;
-use App\Models\Score;
 use App\Models\Stadium;
 use App\Models\Team;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 
 class PartidosController extends Controller {
-
-    public $role;
-    public $permission;
 
     public function home() {
 
@@ -40,7 +34,8 @@ class PartidosController extends Controller {
             'programacion_partido' => 'required',
             'stadium' => 'required',
             'local' => 'required',
-            'visitante' => 'required'
+            'visitante' => 'required',
+            'result' => 'required|max:20'
         ]);
 
         if ($request->input('dos') != 2) {
@@ -52,6 +47,7 @@ class PartidosController extends Controller {
         $encuentro->stadium_id = $request->stadium;
         $encuentro->team_1 = $request->local;
         $encuentro->team_2 = $request->visitante;
+        $encuentro->result = $request->result;
         $encuentro->save();
 
         return redirect()->route('calendar.list');
@@ -72,7 +68,8 @@ class PartidosController extends Controller {
             'programacion_partido' => 'required',
             'stadium' => 'required',
             'local' => 'required',
-            'visitante' => 'required'
+            'visitante' => 'required',
+            'result' => 'required|max:20'
         ]);
 
         $encuentro = Encuentro::find($id);
@@ -80,6 +77,7 @@ class PartidosController extends Controller {
         $encuentro->stadium_id = $request->stadium;
         $encuentro->team_1 = $request->local;
         $encuentro->team_2 = $request->visitante;
+        $encuentro->result = $request->result;
         $encuentro->save();
 
         return redirect()->route('calendar.list');
@@ -89,12 +87,6 @@ class PartidosController extends Controller {
         $encuentro = Encuentro::find($id);
         $encuentro->delete();
         return redirect()->route('calendar.list');
-    }
-
-    /* CONTROLADORES DE RESULTADOS */
-
-    public function classification_list() {
-        return view('classification'); //crear view: classification.blade.php
     }
 
     /* CONTROLADORES DE EQUIPO */

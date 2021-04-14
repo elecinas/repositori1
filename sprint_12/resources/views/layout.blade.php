@@ -55,10 +55,7 @@
                             <a class="nav-link active" aria-current="page" href="{{route('home')}}">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{route('calendar.list')}}">Calendario</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{route('classification.list')}}">Clasificación</a>
+                            <a class="nav-link active" aria-current="page" href="{{route('calendar.list')}}">Partidos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="{{route('teams.list')}}" tabindex="-1" aria-disabled="true">Equipos</a>
