@@ -14,35 +14,39 @@ class PartidosController extends Controller {
 
     public $role;
     public $permission;
-    
+
     public function home() {
-        
-        return view('home'); 
+
+        return view('home');
     }
 
-     /* CONTROLADORES DE CALENDARIO */
-    
+    /* CONTROLADORES DE CALENDARIO */
+
     public function calendar_list() {
         $encuentros = Encuentro::all(); //elloquent collection, contiene elloquent models
         return view('encuentros/encuentros', compact('encuentros'));
     }
-    
-    public function create_calendar(){
+
+    public function create_calendar() {
         $teams = Team::all();
         $stadiums = Stadium::all();
         return view('encuentros/create')
                         ->with('teams', $teams)
                         ->with('stadiums', $stadiums);
     }
-    
-    public function store_calendar(Request $request){
+
+    public function store_calendar(Request $request) {
         $request->validate([
             'programacion_partido' => 'required',
-            'stadium' => 'required', 
-            'local' => 'required', 
+            'stadium' => 'required',
+            'local' => 'required',
             'visitante' => 'required'
         ]);
-        
+
+        if ($request->input('dos') != 2) {
+            return response()->view('error404', array(), 404);
+        };
+
         $encuentro = new Encuentro();
         $encuentro->programacion_partido = $request->programacion_partido;
         $encuentro->stadium_id = $request->stadium;
@@ -52,8 +56,8 @@ class PartidosController extends Controller {
 
         return redirect()->route('calendar.list');
     }
-    
-    public function edit_calendar($id){
+
+    public function edit_calendar($id) {
         $encuentro = Encuentro::find($id);
         $teams = Team::all();
         $stadiums = Stadium::all();
@@ -62,15 +66,15 @@ class PartidosController extends Controller {
                         ->with('stadiums', $stadiums)
                         ->with('encuentro', $encuentro);
     }
-    
-    public function update_calendar(Request $request, $id){
+
+    public function update_calendar(Request $request, $id) {
         $request->validate([
             'programacion_partido' => 'required',
-            'stadium' => 'required', 
-            'local' => 'required', 
+            'stadium' => 'required',
+            'local' => 'required',
             'visitante' => 'required'
         ]);
-        
+
         $encuentro = Encuentro::find($id);
         $encuentro->programacion_partido = $request->programacion_partido;
         $encuentro->stadium_id = $request->stadium;
@@ -80,16 +84,15 @@ class PartidosController extends Controller {
 
         return redirect()->route('calendar.list');
     }
-    
-    public function delete_calendar($id){
+
+    public function delete_calendar($id) {
         $encuentro = Encuentro::find($id);
         $encuentro->delete();
         return redirect()->route('calendar.list');
     }
 
-    
     /* CONTROLADORES DE RESULTADOS */
-    
+
     public function classification_list() {
         return view('classification'); //crear view: classification.blade.php
     }
@@ -99,7 +102,7 @@ class PartidosController extends Controller {
     public function teams_list() {
         $teams = Team::all();
         return view('teams/teams')
-                        ->with('teams', $teams); 
+                        ->with('teams', $teams);
     }
 
     public function create_team() {
@@ -115,6 +118,10 @@ class PartidosController extends Controller {
             'stadium' => 'required|max:50', //hacerlo nullable
             'foundation_year' => 'required|max:4'
         ]);
+
+        if ($request->input('dos') != 2) {
+            return response()->view('error404', array(), 404);
+        };
 
         $stadium = new Stadium();
         $stadium->name = $request->stadium;

@@ -45,6 +45,11 @@
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror
 
+    <div class="form-group mt-2">
+        <label for="dos">Si no escribes 2, dará error:</label>
+        <input name="dos" type="text" class="form-control" id="dos">
+    </div>
+
     <button type="submit" class="btn btn-primary mt-4">Submit</button>
 </form>
 @endsection

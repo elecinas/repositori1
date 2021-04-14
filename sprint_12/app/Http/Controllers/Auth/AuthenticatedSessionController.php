@@ -28,6 +28,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+        //Recogemos y almacenamos las cookies
+        cookie()->forever('cookieNombre', $request->input('name'));
+        cookie()->forever('cookieEmail', $request->input('email'));
+        cookie()->forever('cookiePassword', $request->input('password'));
+        
         $request->authenticate();
 
         $request->session()->regenerate();

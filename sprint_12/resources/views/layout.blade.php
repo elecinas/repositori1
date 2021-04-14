@@ -71,7 +71,11 @@
                         <!--<span color="white">{{session('c_nombre')}}</span>-->
                         @if (Route::has('login'))
                         @auth
-                        <span class="ms-3" class="text-sm text-gray-700 underline">{{Auth::user()->email}}</span>
+                        <span class="ms-3" class="text-sm text-gray-700 underline">{{Auth::user()->email}}
+                            @if(Auth::user()->hasPermissionTo('editar_partidos'))
+                                /Editor
+                            @endif
+                        </span>
                         <a class="ms-3" href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">Dashboard</a>
                         @else
                         <a class="ms-3" href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
