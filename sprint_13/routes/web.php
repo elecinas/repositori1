@@ -1,72 +1,37 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PartidosController;
+use App\Http\Controllers\ReservasController;
 
-/*
-  Route::get('/', function () {
-  return view('welcome');
-  });
- */
 
 //Inicio
-Route::get('/', [PartidosController::class, 'home'])->name('home');
+Route::get('/', [ReservasController::class, 'home'])->name('home');
 
-//Muestra el Calendario de partidos
-Route::get('/calendario', [PartidosController::class, 'calendar_list'])
-        ->middleware('auth')
-        ->name('calendar.list');
-
-//Muestra los Equipos
-Route::get('/teams', [PartidosController::class, 'teams_list'])
-        ->middleware('auth')
-        ->name('teams.list');
+//Muestra las reservas
+Route::get('/reservas', [ReservasController::class, 'list'])
+        //->middleware('auth')
+        ->name('booking.list');
 
 /* * grupo middleware permission* */
 
-Route::group(['middleware' => ['permission:editar_partidos']], function() {
+Route::group(['middleware' => ['permission:gestor_reservas']], function() {
 
-//Crea un partido nuevo
-    Route::get('/calendario/create', [PartidosController::class, 'create_calendar'])
-            ->middleware('auth')
-            ->name('calendar.create');
-    Route::post('/calendario', [PartidosController::class, 'store_calendar'])
-            ->middleware('auth')
-            ->name('calendar.store');
+//Crea una reserva nueva
+    Route::get('/reservas/create', [ReservasController::class, 'create'])
+            ->name('booking.create');
+    Route::post('/reservas', [ReservasController::class, 'store'])
+            ->name('booking.store');
 
-//Edita un partido
-    Route::get('calendario/edit/{id}', [PartidosController::class, 'edit_calendar'])
-            ->middleware('auth')
-            ->name('calendar.edit');
-    Route::put('calendario/edit/{id}', [PartidosController::class, 'update_calendar'])
-            ->middleware('auth')
-            ->name('calendar.update');
+//Edita una reserva
+    Route::get('reservas/edit/{id}', [ReservasController::class, 'edit'])
+            ->name('booking.edit');
+    Route::put('reservas/edit/{id}', [ReservasController::class, 'update'])
+            ->name('booking.update');
 
-//Elimina un partido
-    Route::delete('calendario/{id}', [PartidosController::class, 'delete_calendar'])
-            ->middleware('auth')
-            ->name('calendar.delete');
+//Elimina una reserva
+    Route::delete('reservas/{id}', [ReservasController::class, 'delete'])
+            ->name('booking.delete');
 
-//Crea un equipo nuevo
-    Route::get('/teams/create', [PartidosController::class, 'create_team'])
-            ->middleware('auth')
-            ->name('team.create');
-    Route::post('teams', [PartidosController::class, 'store_team'])
-            ->middleware('auth')
-            ->name('team.store');
-
-//Edita un equipo
-    Route::get('teams/edit/{id}', [PartidosController::class, 'edit_team'])
-            ->middleware('auth')
-            ->name('team.edit');
-    Route::put('teams/edit/{id}', [PartidosController::class, 'update_team'])
-            ->middleware('auth')
-            ->name('team.update');
-
-//Elimina un equipo
-    Route::delete('teams/{id}', [PartidosController::class, 'delete_team'])
-            ->middleware('auth')
-            ->name('team.delete');
 });
 
 

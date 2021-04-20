@@ -21,7 +21,7 @@ class PermissionMiddleware
             return redirect('/');
         }
         
-        if(!Auth::user()->hasPermissionTo('editar_partidos')){
+        if(!Auth::user()->hasPermissionTo('gestor_reservas')){
             return redirect('/');
         }
         
@@ -29,7 +29,7 @@ class PermissionMiddleware
             abort(403);
         }*/
         
-        if(Auth::user()->hasPermissionTo('editar_partidos')){
+        if(Auth::user()->hasPermissionTo('gestor_reservas')){
             return $next($request);
         }
         

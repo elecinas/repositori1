@@ -25,8 +25,8 @@ class UserSeeder extends Seeder
         DB::table('users')->insert(['name' => 'Administrador', 'email' => 'admin@istra.dor', 'password'=> bcrypt('12345678')]);
         
         $role = Role::create(['name'=>'Editor']);
-        Permission::create(['name'=>'editar_partidos']);
-        $role->givePermissionTo('editar_partidos');
+        Permission::create(['name'=>'gestor_reservas']);
+        $role->givePermissionTo('gestor_reservas');
         $user = User::where('email', 'admin@istra.dor')->first();
         $user->assignRole('Editor');
     }

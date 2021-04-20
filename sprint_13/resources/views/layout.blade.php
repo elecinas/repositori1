@@ -55,10 +55,7 @@
                             <a class="nav-link active" aria-current="page" href="{{route('home')}}">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{route('calendar.list')}}">Partidos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{route('teams.list')}}" tabindex="-1" aria-disabled="true">Equipos</a>
+                            <a class="nav-link active" aria-current="page" href="{{route('booking.list')}}">Reservas</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link disabled" href="#" tabindex="-1"  aria-disabled="true">Disabled</a>
@@ -69,7 +66,7 @@
                         @if (Route::has('login'))
                         @auth
                         <span class="ms-3" class="text-sm text-gray-700 underline">{{Auth::user()->email}}
-                            @if(Auth::user()->hasPermissionTo('editar_partidos'))
+                            @if(Auth::user()->hasPermissionTo('gestor_reservas'))
                                 /Editor
                             @endif
                         </span>

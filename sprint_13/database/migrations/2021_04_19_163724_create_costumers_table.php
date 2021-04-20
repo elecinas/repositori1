@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStadiumsTable extends Migration
+class CreateCostumersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateStadiumsTable extends Migration
      */
     public function up()
     {
-        Schema::create('stadiums', function (Blueprint $table) {
+        Schema::create('costumers', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            //$table->timestamps();
+            $table->string('name');
+            $table->string('dni', 9)->unique();
+            $table->string('phone', 12)->unique();
+            $table->timestamps();
         });
     }
 
@@ -27,6 +29,6 @@ class CreateStadiumsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stadiums');
+        Schema::dropIfExists('costumers');
     }
 }
