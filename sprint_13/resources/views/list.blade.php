@@ -3,10 +3,72 @@
 @section('content')
 
 <h1>Reservas</h1>
-<p class="lead">Aquí se muestra el CRUD de las reservas</p>
+<p class="lead">Lista de reservas:</p>
 
 
+@can('gestor_reservas')
+<div class="row">
+    <div class="col-md-3 m-4">
+        <a class="btn btn-success" href="{{ route('booking.create') }}">Hacer reserva</a>
+    </div>
+</div>
+@else
+No puedes crear reservas.
+@endcan
+{{-- Esto es un comentario de Blade --}}
+<!--Tabla-->
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">DNI</th>
+            <th scope="col">Día de llegada</th>
+            <th scope="col">Temática habitación</th>
+            <th scope="col">Número</th>
+            <th scope="col">Tema planta</th>
+            <th scope="col">Planta</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($costumers as $costumer)
+        @foreach($costumer->rooms as $room)
+        <tr>
+            <th scope="row">{{ $room->pivot->id }}</th>
+            <td>{{ $costumer->name}} </td>
+            <td>{{ $costumer->dni }}</td>
+            <td>{{ $room->pivot->dia_reserva }}</td>
+            <td>{{ $room->name }}</td>
+            <td>{{ $room->number }}</td>
+            <td>{{ $room->floor->floor_theme }}</td>
+            <td>{{ $room->floor->floor }}</td>
 
+            @can('gestor_reservas')
+            <td>
+                <div class="btn-group" role="group">
+                    <form method="GET" action="{{--route('edit', $costumer->id)--}}">
+                        @csrf
+                        <button type="submit" href="" class="btn btn-warning">Modificar</button>
+                    </form>
+                    <form method="POST" action="{{--route('delete', $costumer->id)--}}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" href="" class="btn btn-danger">Suprimir</button>
+                    </form>    
+                </div>
+            </td>
+            @else
+            <td>
+                No puedes editar reservas.
+            </td>
+            @endcan
+
+        </tr>
+        @endforeach
+        @endforeach
+    </tbody>
+</table>
 
 
 

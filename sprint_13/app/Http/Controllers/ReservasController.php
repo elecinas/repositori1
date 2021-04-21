@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-//use App\Models\Costumer;
-//use App\Models\Room;
-//use App\Models\Booking;
+use App\Models\Costumer;
+use App\Models\Room;
 
 class ReservasController extends Controller
 {
@@ -15,17 +14,13 @@ class ReservasController extends Controller
     }
     
     public function list() {
-        //$encuentros = Encuentro::all(); 
-        //return view('encuentros/encuentros', compact('encuentros'));
-        return view('list');
+        $costumers = Costumer::all(); 
+        return view('list', compact('costumers'));
     }
     
     public function create() {
-        //$teams = Team::all();
-        //$stadiums = Stadium::all();
-        /*return view('encuentros/create')
-                        ->with('teams', $teams)
-                        ->with('stadiums', $stadiums);*/
+        $rooms = Room::all();
+        return view('create', compact('rooms'));
     }
     
     public function store(Request $request) {

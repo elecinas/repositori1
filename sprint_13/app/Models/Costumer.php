@@ -14,6 +14,7 @@ class Costumer extends Model
     public function rooms() 
     {
         return $this->belongsToMany(Room::class)
+                ->withPivot('id')
                 ->withPivot('dia_reserva')
                 ->withTimestamps();
     }

@@ -16,12 +16,12 @@ class CreateCostumerRoomTable extends Migration
         Schema::create('costumer_room', function (Blueprint $table) {
             $table->id();
             $table->date('dia_reserva');
-            $table->unsignedBigInteger('costumer_id')->unique();
-            $table->unsignedBigInteger('room_id')->unique();
-            
+            $table->unsignedBigInteger('costumer_id');
+            $table->unsignedBigInteger('room_id');
             $table->foreign('costumer_id')->references('id')->on('costumers');
             $table->foreign('room_id')->references('id')->on('rooms');
             $table->timestamps();
+            $table->unique(['dia_reserva', 'room_id']);
         });
     }
 
