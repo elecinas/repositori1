@@ -2,7 +2,7 @@
 @section ('content')
 
 <h1>Crear reserva</h1>
-<form method="POST" action="{{-- url('teams') --}}" >
+<form method="POST" action="{{ url('reservas') }}" >
     @csrf
     <div class="form-group mt-3">
         <label for="name">Nombre</label>

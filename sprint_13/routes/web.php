@@ -8,15 +8,15 @@ Route::get('/', [ReservasController::class, 'home'])->name('home');
 
 //Muestra las reservas
 Route::get('/reservas', [ReservasController::class, 'list'])
-        //->middleware('auth')
+        ->middleware('auth')
         ->name('booking.list');
 
 //Crea una reserva nueva
 Route::get('/reservas/create', [ReservasController::class, 'create'])
-        //->middleware('auth')
+        ->middleware('auth')
         ->name('booking.create');
 Route::post('/reservas', [ReservasController::class, 'store'])
-        //->middleware('auth')
+        ->middleware('auth')
         ->name('booking.store');
 
 /* * grupo middleware permission* */

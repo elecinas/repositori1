@@ -6,15 +6,12 @@
 <p class="lead">Lista de reservas:</p>
 
 
-@can('gestor_reservas')
 <div class="row">
     <div class="col-md-3 m-4">
         <a class="btn btn-success" href="{{ route('booking.create') }}">Hacer reserva</a>
     </div>
 </div>
-@else
-No puedes crear reservas.
-@endcan
+
 {{-- Esto es un comentario de Blade --}}
 <!--Tabla-->
 <table class="table">
@@ -47,11 +44,11 @@ No puedes crear reservas.
             @can('gestor_reservas')
             <td>
                 <div class="btn-group" role="group">
-                    <form method="GET" action="{{--route('edit', $costumer->id)--}}">
+                    <form method="GET" action="{{ route('booking.edit',  $room->pivot->id) }}">
                         @csrf
                         <button type="submit" href="" class="btn btn-warning">Modificar</button>
                     </form>
-                    <form method="POST" action="{{--route('delete', $costumer->id)--}}">
+                    <form method="POST" action="{{ route('booking.delete', $room->pivot->id, $costumer->id) }}">
                         @csrf
                         @method('DELETE')
                         <button type="submit" href="" class="btn btn-danger">Suprimir</button>

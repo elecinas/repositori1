@@ -21,7 +21,7 @@ class CreateCostumerRoomTable extends Migration
             $table->foreign('costumer_id')->references('id')->on('costumers');
             $table->foreign('room_id')->references('id')->on('rooms');
             $table->timestamps();
-            $table->unique(['dia_reserva', 'room_id']);
+            $table->unique(['dia_reserva', 'room_id']);//constraint unique multi-columns
         });
     }
 
