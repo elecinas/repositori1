@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Models\Costumer;
 use App\Models\Room;
 use Illuminate\Support\Facades\DB;
@@ -18,8 +17,8 @@ class ReservasController extends Controller {
     public function list() {
         //$costumers = Costumer::all(); 
         $costumers = Costumer::join('costumer_room', 'costumer_room.costumer_id', '=', 'costumers.id')
-                ->orderByDesc('id')
                 ->select('costumers.*')
+                ->orderBy('dia_reserva')
                 ->get();
 
         return view('list', compact('costumers'));
