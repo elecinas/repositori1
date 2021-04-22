@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReservasController;
+use App\Http\Controllers\DashboardController;
 
 //Inicio
 Route::get('/', [ReservasController::class, 'home'])->name('home');
@@ -42,3 +43,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
+
+
+//Rutas para Cool Admin Dashboard
+
+Route::get('dashboard2', [DashboardController::class, 'dashboard2']);
+
