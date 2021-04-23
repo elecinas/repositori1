@@ -4,6 +4,26 @@
         @include('theme.partials.head')
     </head>
     <body class="animsition">
+        <style type="text/css">
+            .page-wrapper { 
+                position: fixed; 
+                top: 58px;
+            }
+
+            @media (min-width: 991px) {
+                .header-desktop {
+                    position: fixed;
+                    top: 58px;
+                }
+
+                .menu-sidebar {
+                    position: fixed;
+                    top: 58px;
+                }
+            }
+
+        </style>
+        @include('extractos.nav')
         <div class="page-wrapper">
             {{-- @include('theme.partials.nav' --}}
             @include('theme.partials.header')
