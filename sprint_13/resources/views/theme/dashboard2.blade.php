@@ -6,16 +6,19 @@
     <body class="animsition">
         <style type="text/css">
             .page-wrapper { 
-                position: fixed; 
+                position: relative; 
                 top: 58px;
             }
 
             @media (min-width: 991px) {
+                .page-wrapper {
+                    position: relative;
+                    
+                }
                 .header-desktop {
                     position: fixed;
                     top: 58px;
                 }
-
                 .menu-sidebar {
                     position: fixed;
                     top: 58px;

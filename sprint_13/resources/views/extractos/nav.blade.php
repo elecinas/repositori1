@@ -25,7 +25,7 @@
                                 /Editor
                             @endif
                         </span>
-                        <a class="ms-3" href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">Dashboard</a>
+                        <a class="ms-3" href="{{ url('/dashboard2') }}" class="text-sm text-gray-700 underline">Dashboard</a>
                         @else
                         <a class="ms-3" href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
 

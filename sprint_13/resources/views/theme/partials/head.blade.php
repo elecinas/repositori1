@@ -6,7 +6,7 @@
 <meta name="keywords" content="au theme template">
 
 <!-- Title Page-->
-<title>Inbox</title>
+<title>Tasca Srint 13 - Laravel</title>
 
 <!-- Fontfaces CSS-->
 <link href="theme/css/font-face.css" rel="stylesheet" media="all">
@@ -16,6 +16,18 @@
 
 <!-- Bootstrap CSS-->
 <link href="theme/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+
+<!-- Estilos Navbar D: -->
+<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/navbar-fixed/">
+<!--CSS BOOTSTRAP-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+<!-- Favicons -->
+<link rel="icon" href="../public/favicon.ico">
+<!-- Custom styles for this template -->
+<link href="navbar-top-fixed.css" rel="stylesheet">
+<!--Estilos Esther-->
+<link  rel="stylesheet" href="css/style.css" media="all">
+<!-- END Estilos Navbar D: -->
 
 <!-- Vendor CSS-->
 <link href="theme/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
