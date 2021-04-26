@@ -37,11 +37,7 @@ class ReservasController extends Controller {
             'room' => 'required|unique:costumer_room,dia_reserva',
             'dia_reserva' => 'required|unique:costumer_room,room_id'
         ]);
-
-        if ($request->input('dos') != 2) {
-            return response()->view('error404', array(), 404);
-        }
-
+        
         $costumer = new Costumer();
         $costumer->name = $request->name;
         $costumer->dni = $request->dni;
@@ -88,9 +84,9 @@ class ReservasController extends Controller {
         //Raw Query
         DB::table('costumer_room')->where('costumer_id', $reserva->costumer_id)
                 ->update(array(
-                        'dia_reserva' => $request->dia_reserva,
-                        'room_id' => $request->room,
-                    ));
+                    'dia_reserva' => $request->dia_reserva,
+                    'room_id' => $request->room,
+        ));
         //Eloquent
         $costumer->name = $request->name;
         $costumer->dni = $request->dni;

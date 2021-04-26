@@ -1,5 +1,6 @@
-@extends ('layout')
-@section ('content')
+@extends('layout')
+@section('title', 'titulo')
+@section('content')
 <main class="container">
     <div class="bg-light p-5 rounded">
         <form method="POST" action="{{ route('booking.update', $reserva->id) }}" >

@@ -15,7 +15,7 @@
 
         {{-- Esto es un comentario de Blade --}}
         <!--Tabla-->
-        <table class="table">
+        <table class="table table-hover table-responsive">
             <thead>
                 <tr>
                     <th scope="col">#</th>

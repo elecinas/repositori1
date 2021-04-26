@@ -12,12 +12,6 @@
             <li>e-mail: admin@istra.dor</li>
             <li>password: 12345678</li>
         </ul>
-
-
-
-
-
-
         <!--<a class="btn btn-lg btn-primary" href="#" role="button">Ver &raquo;</a>-->
         @endsection
     </div>

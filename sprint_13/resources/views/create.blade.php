@@ -1,5 +1,6 @@
-@extends ('layout')
-@section ('content')
+@extends('layout')
+@section('title', 'titulo')
+@section('content')
 <main class="container">
     <div class="bg-light p-5 rounded">
         <h1>Crear reserva</h1>
@@ -60,6 +61,7 @@
 
             <button type="submit" class="btn btn-primary mt-4">Submit</button>
         </form>
+        <!--<a class="btn btn-lg btn-primary" href="#" role="button">Ver &raquo;</a>-->
         @endsection
     </div>
     <!-- <a class="btn btn-lg btn-primary" href="" role="button">Error 404 &raquo;</a>-->

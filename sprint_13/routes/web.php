@@ -18,6 +18,7 @@ Route::get('/reservas/create', [ReservasController::class, 'create'])
         ->name('booking.create');
 Route::post('/reservas', [ReservasController::class, 'store'])
         ->middleware('auth')
+        ->middleware('error404')
         ->name('booking.store');
 
 /* * grupo middleware permission* */
