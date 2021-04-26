@@ -69,16 +69,18 @@ class ReservasController extends Controller {
         $request->validate([
             'name' => 'required',
             'room' => 'required|unique:costumer_room,dia_reserva',
-            'dia_reserva' => 'required|unique:costumer_room,room_id'
+            'dia_reserva' => 'required|unique:costumer_room,room_id',
+            'dni' => 'required|max:9',
+            'phone' => 'required|max:12'
         ]);
 
-        //Comprobamos que el valor ha cambiado, si es así validamos
+        /*//Comprobamos que el valor ha cambiado, si es así validamos
         if ($request->dni != $costumer->dni) {
             $request->validate(['dni' => 'required|unique:costumers,dni|max:9']);
         }
         if ($request->phone != $costumer->phone) {
             $request->validate(['phone' => 'required|unique:costumers,phone|max:12']);
-        }
+        }*/
 
         //updateamos los datos, los de la tabla pivote con raw query y los de Costumer con Eloquent
         //Raw Query

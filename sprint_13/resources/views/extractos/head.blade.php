@@ -6,16 +6,16 @@
     
     <title>Tasca Srint 13 - Laravel</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/navbar-fixed/">
+    <link rel="canonical" href="{{ asset('https://getbootstrap.com/docs/5.0/examples/navbar-fixed/') }}">
     
     <!--CSS BOOTSTRAP-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link href="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     
     <!-- Favicons -->
-    <link rel="icon" href="../public/favicon.ico">
+    <link rel="icon" href="{{ asset('../public/favicon.ico') }}">
     
     <!-- Custom styles for this template -->
-    <link href="navbar-top-fixed.css" rel="stylesheet">
+    <link href="{{ asset('navbar-top-fixed.css') }}" rel="stylesheet">
     <!--Estilos Esther-->
-    <link  rel="stylesheet" href="css/style.css" media="all">
+    <link  rel="stylesheet" href="{{ asset('css/style.css') }}" media="all">
 </head>
