@@ -26,7 +26,7 @@ class CreatePicturesTable extends Migration
             $table->string('photo_fake');
             $table->date('date_arrival');
             $table->unsignedBigInteger('shop_id');
-            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade')->onUpdate('cascade');;
+            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
