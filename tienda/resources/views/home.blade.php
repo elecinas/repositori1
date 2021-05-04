@@ -24,7 +24,7 @@
                         <label for="name">Nombre obra</label>
                         <input name="name" type="text" class="form-control" id="name" value="{{ old('name') }}">
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="description">Descripción obra</label>
                         <input name="description" type="text" class="form-control" id="description" value="{{ old('description') }}">
@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="price">Precio cuadro</label>
+                        <label for="price">Precio obra</label>
                         <input name="price" type="text" class="form-control" id="price" value="{{ old('price') }}">
                     </div>
 
@@ -75,7 +75,7 @@
                 <div class="row">
                     <div class="col-6">
                         <br>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-dark">Submit</button>
                     </div>
                 </div>
             </div>
@@ -89,7 +89,9 @@
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href="#" class="btn btn-dark">Edit</a><a href="#" class="btn btn-secondary">Delete</a>
+                    </div>
                 </div>
             </div>
             <div class="card" style="width: 18rem;">
@@ -97,7 +99,9 @@
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href="#" class="btn btn-dark">Edit</a><a href="#" class="btn btn-secondary">Delete</a>
+                    </div>
                 </div>
             </div>
             <div class="card" style="width: 18rem;">
@@ -105,7 +109,9 @@
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href="#" class="btn btn-dark">Edit</a><a href="#" class="btn btn-secondary">Delete</a>
+                    </div>
                 </div>
             </div>
             <div class="card" style="width: 18rem;">
@@ -113,7 +119,9 @@
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href="#" class="btn btn-dark">Edit</a><a href="#" class="btn btn-secondary">Delete</a>
+                    </div>
                 </div>
             </div>
             <div class="card" style="width: 18rem;">
@@ -121,7 +129,9 @@
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href="#" class="btn btn-dark">Edit</a><a href="#" class="btn btn-secondary">Delete</a>
+                    </div>
                 </div>
             </div>
             <div class="card" style="width: 18rem;">
@@ -129,7 +139,9 @@
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href="#" class="btn btn-dark">Edit</a><a href="#" class="btn btn-secondary">Delete</a>
+                    </div>
                 </div>
             </div>
         </div>
