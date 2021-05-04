@@ -1,0 +1,170 @@
+{
+	"info": {
+		"_postman_id": "ea963d69-b5f1-4409-8733-a2420b86c779",
+		"name": "botiga (tasca 14)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "{{t14}}/shops",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{t14}}/shops",
+					"host": [
+						"{{t14}}"
+					],
+					"path": [
+						"shops"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{t14}}/shops",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "La pirámide de Cleopatra",
+							"type": "text"
+						},
+						{
+							"key": "max_pictures",
+							"value": "12",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{t14}}/shops",
+					"host": [
+						"{{t14}}"
+					],
+					"path": [
+						"shops"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{t14}}/shops/{id}/pictures",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{t14}}/shops/1/pictures",
+					"host": [
+						"{{t14}}"
+					],
+					"path": [
+						"shops",
+						"1",
+						"pictures"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{t14}}/shops/{id}/pictures",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "noche estrellada",
+							"type": "text"
+						},
+						{
+							"key": "name_fake",
+							"value": "diamante de luna",
+							"type": "text"
+						},
+						{
+							"key": "author",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "30000000",
+							"type": "text"
+						},
+						{
+							"key": "price_fake",
+							"value": "3000",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "la obra más famosa de Vincent Van Gogh",
+							"type": "text"
+						},
+						{
+							"key": "description_fake",
+							"value": "un collar meh",
+							"type": "text"
+						},
+						{
+							"key": "photo",
+							"value": "https://images-na.ssl-images-amazon.com/images/I/8180okAuX0L._AC_SX522_.jpg",
+							"type": "text"
+						},
+						{
+							"key": "photo_fake",
+							"value": "https://cdn.forbes.com.mx/2019/01/unnamed-1-623x360.jpg",
+							"type": "text"
+						},
+						{
+							"key": "date_arrival",
+							"value": "2021-02-16",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{t14}}/shops/1/pictures",
+					"host": [
+						"{{t14}}"
+					],
+					"path": [
+						"shops",
+						"1",
+						"pictures"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{t14}}/shops/{id}/pictures",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{t14}}/shops/2/pictures",
+					"host": [
+						"{{t14}}"
+					],
+					"path": [
+						"shops",
+						"2",
+						"pictures"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
