@@ -24,10 +24,10 @@ class UserSeeder extends Seeder
         DB::table('users')->insert(['name' => 'Esther', 'email' => 'estherlecina@gmail.com', 'password'=> bcrypt('12345678')]);
         DB::table('users')->insert(['name' => 'Administrador', 'email' => 'admin@istra.dor', 'password'=> bcrypt('12345678')]);
         
-        $role = Role::create(['name'=>'Editor']);
-        Permission::create(['name'=>'gestor_reservas']);
-        $role->givePermissionTo('gestor_reservas');
+        $role = Role::create(['name'=>'comprador_vip']);
+        Permission::create(['name'=>'vista_no_fake']);
+        $role->givePermissionTo('vista_no_fake');
         $user = User::where('email', 'admin@istra.dor')->first();
-        $user->assignRole('Editor');
+        $user->assignRole('comprador_vip');
     }
 }

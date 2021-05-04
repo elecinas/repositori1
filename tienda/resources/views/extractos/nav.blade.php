@@ -18,7 +18,7 @@
                         @if (Route::has('login'))
                         @auth
                         <span class="ms-3" class="text-sm text-gray-700 underline">{{Auth::user()->email}}
-                            @if(Auth::user()->hasPermissionTo('gestor_reservas'))
+                            @if(Auth::user()->hasPermissionTo('vista_no_fake'))
                                 /Editor
                             @endif
                         </span>
