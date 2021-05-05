@@ -7,7 +7,7 @@
             margin-bottom: 1rem;
         }
 
-        form{
+        .formulario{
             margin-bottom: 3rem;
         }
     </style>
@@ -15,7 +15,7 @@
         <h1>API con AXIOS (CUADROS)</h1>
         <p class="lead">El e-mail y password del administrador es:<br> <strong>e-mail:</strong> admin@istra.dor | <strong>password:</strong> 12345678</p>
         {{-- STARTS -- Formulario insercion datos --}}
-        <form method="POST" action="{{-- route('booking.update', $reserva->id) --}}" >
+        <form method="POST" class="formulario" action="{{-- route('booking.update', $reserva->id) --}}" >
             <div class="row">
                 @csrf
                 @method('PUT')
