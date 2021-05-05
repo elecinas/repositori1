@@ -27,12 +27,23 @@ class AuthenticatedSessionController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(LoginRequest $request)
-    {
+    { 
         $request->authenticate();
+        
+        //--STARTS-- crear accesstoken
+        
+        $user = Auth::user();
+        $token = $user->createToken('ElToken')->accessToken;
+        
+        //--ENDS-- crear accesstoken
 
         $request->session()->regenerate();
-
-        return redirect()->intended(RouteServiceProvider::HOME);
+        
+        //return redirect()->intended(RouteServiceProvider::HOME);
+        //redirect()->route('home', ['user'=> $user, 'token' => $token]);
+        return view('home')
+                ->with('token', $token)
+                ->with('user', $user);
     }
 
     /**
