@@ -18,4 +18,5 @@
     <link href="{{ asset('navbar-top-fixed.css') }}" rel="stylesheet">
     <!--Estilos Esther-->
     <link  rel="stylesheet" href="{{ asset('css/style.css') }}" media="all">
+    
 </head>

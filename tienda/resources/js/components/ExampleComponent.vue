@@ -1,5 +1,5 @@
 <template>
-    <div>Example Component</div>
+    <div>nos morimos!!</div>
 </template>
 
 <script>
