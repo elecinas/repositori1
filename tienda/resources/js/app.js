@@ -5,11 +5,12 @@ require('alpinejs');
 /*IMPORTANDO VUE*/
 
 import { createApp } from 'vue';
-import ExampleComponent from  './components/ExampleComponent'
+import AdminComponent from './components/AdminComponent';
 
-        createApp({
-            components: {
-                ExampleComponent,
-            }
-        }).mount('#app');
+createApp({
+    components: {
+        AdminComponent,
+      }
+}).mount('#app');
+
 
