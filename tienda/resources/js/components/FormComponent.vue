@@ -23,12 +23,12 @@
         </div>
 
         <div class="form-group">
-          <label for="image">Imagen obra</label>
+          <label for="photo">Imagen obra</label>
           <input
-            name="image"
+            name="photo"
             type="text"
             class="form-control"
-            v-model="image"
+            v-model="photo"
           />
         </div>
 
@@ -74,12 +74,12 @@
         </div>
 
         <div class="form-group">
-          <label for="image_fake">Imagen collar</label>
+          <label for="photo_fake">Imagen collar</label>
           <input
-            name="image_fake"
+            name="photo_fake"
             type="text"
             class="form-control"
-            v-model="image_fake"
+            v-model="photo_fake"
           />
         </div>
 
@@ -119,12 +119,12 @@ export default {
     return {
       name: '',
       description: '',
-      image: '',
+      photo: '',
       price: '',
       author: '',
       name_fake: '',
       description_fake: '',
-      image_fake: '',
+      photo_fake: '',
       price_fake: '',
       date_arrival: '',
     };
@@ -132,30 +132,63 @@ export default {
 
   methods: {
     newCard() {
-      let card = {
-        id: 2,
+      const params = {
         name: this.name,
         description: this.description,
-        image: this.image,
+        photo: this.photo,
         price: this.price,
         author: this.author,
         name_fake: this.name_fake,
         description_fake: this.description_fake,
-        image_fake: this.image_fake,
+        photo_fake: this.photo_fake,
         price_fake: this.price_fake,
         date_arrival: this.date_arrival,
+        shop_id: 1
       };
-      this.$emit("new", card);
+
       this.name = '';
       this.description = '';
-      this.image = '';
+      this.photo = '';
       this.price = '';
       this.author = '';
       this.name_fake = '';
       this.description_fake = '';
-      this.image_fake = '';
+      this.photo_fake = '';
       this.price_fake = '';
       this.date_arrival = '';
+
+      axios.post('api/shops/1/pictures', params).then((response)=>{
+        const card = response.data;
+        this.$emit("new", card);
+      });
+
+      /*let card = {
+        id: 2,
+        name: this.name,
+        description: this.description,
+        photo: this.photo,
+        price: this.price,
+        author: this.author,
+        name_fake: this.name_fake,
+        description_fake: this.description_fake,
+        photo_fake: this.photo_fake,
+        price_fake: this.price_fake,
+        date_arrival: this.date_arrival,
+        shop_id: 1
+      };*/
+      /*
+      
+      this.name = '';
+      this.description = '';
+      this.photo = '';
+      this.price = '';
+      this.author = '';
+      this.name_fake = '';
+      this.description_fake = '';
+      this.photo_fake = '';
+      this.price_fake = '';
+      this.date_arrival = '';
+      */
     },
   },
 };

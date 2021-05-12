@@ -21,5 +21,7 @@ Route::prefix('/shops/{shop}')->group(function(){
     /*Route::resource('pictures', PictureController::class);*/
     Route::get('/pictures', [PictureController::class, 'index']);
     Route::post('/pictures', [PictureController::class, 'store']);
-    Route::delete('/pictures', [PictureController::class, 'destroy']);
+    Route::put('/pictures/{picture}', [PictureController::class, 'update']);
+    Route::delete('/pictures/{picture}', [PictureController::class, 'destroy']);
+   
 });

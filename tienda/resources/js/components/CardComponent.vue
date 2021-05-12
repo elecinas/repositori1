@@ -2,10 +2,10 @@
   <div id="card-component">
     <div v-if="editMode" class="card" style="width: 18rem">
       <div class="card-body">
-        <label for="image">Imagen obra</label>
-        <input name="image" type="text" class="form-control" v-model="card.image">
+        <label for="photo">Imagen obra</label>
+        <input name="photo" type="text" class="form-control" v-model="card.photo">
         <label for="name">Título obra</label>
-        <input name="image" type="text" class="form-control" v-model="card.name">
+        <input name="name" type="text" class="form-control" v-model="card.name">
         <label for="description">Descripción obra</label>
         <input name="description" type="text" class="form-control" v-model="card.description">
 
@@ -16,7 +16,7 @@
       </div>
     </div>
     <div v-else class="card" style="width: 18rem">
-      <img :src="card.image" class="card-img-top" alt="..." />
+      <img :src="card.photo" class="card-img-top" alt="..." />
       <div class="card-body">
         <h5 class="card-title">{{ card.name }}</h5>
         <p class="card-text">{{ card.description }}</p>
@@ -47,14 +47,33 @@ export default {
 
   methods: {
     onClickDelete() {
-      this.$emit("delete");
+      axios.delete(`api/shops/1/pictures/${this.card.id}`).then((response) => {
+        console.log(response);
+        this.$emit("delete");
+      });
     },
     onClickEdit() {
       this.editMode = true;
     },
     onClickUpdate() {
+      const params = {
+        name: this.card.name,
+        description: this.card.description,
+        photo: this.card.photo,
+        price: this.card.price,
+        author: this.card.author,
+        name_fake: this.card.name_fake,
+        description_fake: this.card.description_fake,
+        photo_fake: this.card.photo_fake,
+        price_fake: this.card.price_fake,
+        date_arrival: this.card.date_arrival,
+        shop_id: 1
+      };
+      axios.put('api/shops/1/pictures/' +this.card.id, params).then((response) => {
       this.editMode = false;
+      const card = response.data;
       this.$emit('update', card);
+      });
     },
   },
 };

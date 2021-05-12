@@ -18550,13 +18550,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      cards: [{
-        id: 1,
-        image: "https://img.culturacolectiva.com/content/2016/01/francis-bacon-medium.jpg",
-        name: "Francis Bacon",
-        description: "Retrato que Lucian Freud hizo sobre Francis Bacon."
-      }]
+      cards: []
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('api/shops/1/pictures').then(function (response) {
+      _this.cards = response.data;
+    });
   },
   methods: {
     addCard: function addCard(card) {
@@ -18600,14 +18602,39 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onClickDelete: function onClickDelete() {
-      this.$emit("delete");
+      var _this = this;
+
+      axios["delete"]("api/shops/1/pictures/".concat(this.card.id)).then(function (response) {
+        console.log(response);
+
+        _this.$emit("delete");
+      });
     },
     onClickEdit: function onClickEdit() {
       this.editMode = true;
     },
     onClickUpdate: function onClickUpdate() {
-      this.editMode = false;
-      this.$emit('update', card);
+      var _this2 = this;
+
+      var params = {
+        name: this.card.name,
+        description: this.card.description,
+        photo: this.card.photo,
+        price: this.card.price,
+        author: this.card.author,
+        name_fake: this.card.name_fake,
+        description_fake: this.card.description_fake,
+        photo_fake: this.card.photo_fake,
+        price_fake: this.card.price_fake,
+        date_arrival: this.card.date_arrival,
+        shop_id: 1
+      };
+      axios.put('api/shops/1/pictures/' + this.card.id, params).then(function (response) {
+        _this2.editMode = false;
+        var card = response.data;
+
+        _this2.$emit('update', card);
+      });
     }
   }
 });
@@ -18630,42 +18657,76 @@ __webpack_require__.r(__webpack_exports__);
     return {
       name: '',
       description: '',
-      image: '',
+      photo: '',
       price: '',
       author: '',
       name_fake: '',
       description_fake: '',
-      image_fake: '',
+      photo_fake: '',
       price_fake: '',
       date_arrival: ''
     };
   },
   methods: {
     newCard: function newCard() {
-      var card = {
-        id: 2,
+      var _this = this;
+
+      var params = {
         name: this.name,
         description: this.description,
-        image: this.image,
+        photo: this.photo,
         price: this.price,
         author: this.author,
         name_fake: this.name_fake,
         description_fake: this.description_fake,
-        image_fake: this.image_fake,
+        photo_fake: this.photo_fake,
         price_fake: this.price_fake,
-        date_arrival: this.date_arrival
+        date_arrival: this.date_arrival,
+        shop_id: 1
       };
-      this.$emit("new", card);
       this.name = '';
       this.description = '';
-      this.image = '';
+      this.photo = '';
       this.price = '';
       this.author = '';
       this.name_fake = '';
       this.description_fake = '';
-      this.image_fake = '';
+      this.photo_fake = '';
       this.price_fake = '';
       this.date_arrival = '';
+      axios.post('api/shops/1/pictures', params).then(function (response) {
+        var card = response.data;
+
+        _this.$emit("new", card);
+      });
+      /*let card = {
+        id: 2,
+        name: this.name,
+        description: this.description,
+        photo: this.photo,
+        price: this.price,
+        author: this.author,
+        name_fake: this.name_fake,
+        description_fake: this.description_fake,
+        photo_fake: this.photo_fake,
+        price_fake: this.price_fake,
+        date_arrival: this.date_arrival,
+        shop_id: 1
+      };*/
+
+      /*
+      
+      this.name = '';
+      this.description = '';
+      this.photo = '';
+      this.price = '';
+      this.author = '';
+      this.name_fake = '';
+      this.description_fake = '';
+      this.photo_fake = '';
+      this.price_fake = '';
+      this.date_arrival = '';
+      */
     }
   }
 });
@@ -18765,7 +18826,7 @@ var _hoisted_3 = {
 };
 
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
-  "for": "image"
+  "for": "photo"
 }, "Imagen obra", -1
 /* HOISTED */
 );
@@ -18813,16 +18874,16 @@ var _hoisted_12 = {
 
 var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [$data.editMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
-    name: "image",
+    name: "photo",
     type: "text",
     "class": "form-control",
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
-      return $props.card.image = $event;
+      return $props.card.photo = $event;
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.card.image]]), _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
-    name: "image",
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.card.photo]]), _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+    name: "name",
     type: "text",
     "class": "form-control",
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
@@ -18852,7 +18913,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       return $options.onClickDelete();
     })
   }, "Delete")])])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
-    src: $props.card.image,
+    src: $props.card.photo,
     "class": "card-img-top",
     alt: "..."
   }, null, 8
@@ -18922,7 +18983,7 @@ var _hoisted_7 = {
 };
 
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
-  "for": "image"
+  "for": "photo"
 }, "Imagen obra", -1
 /* HOISTED */
 );
@@ -18975,7 +19036,7 @@ var _hoisted_18 = {
 };
 
 var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
-  "for": "image_fake"
+  "for": "photo_fake"
 }, "Imagen collar", -1
 /* HOISTED */
 );
@@ -19038,15 +19099,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.description]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
-    name: "image",
+    name: "photo",
     type: "text",
     "class": "form-control",
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
-      return $data.image = $event;
+      return $data.photo = $event;
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.image]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.photo]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     name: "price",
     type: "text",
     "class": "form-control",
@@ -19083,15 +19144,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.description_fake]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
-    name: "image_fake",
+    name: "photo_fake",
     type: "text",
     "class": "form-control",
     "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
-      return $data.image_fake = $event;
+      return $data.photo_fake = $event;
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.image_fake]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.photo_fake]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     name: "price_fake",
     type: "text",
     "class": "form-control",

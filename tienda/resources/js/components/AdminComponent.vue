@@ -27,16 +27,14 @@ export default {
   },
   data() {
     return {
-      cards: [
-        {
-          id: 1,
-          image:
-            "https://img.culturacolectiva.com/content/2016/01/francis-bacon-medium.jpg",
-          name: "Francis Bacon",
-          description: "Retrato que Lucian Freud hizo sobre Francis Bacon.",
-        },
-      ],
+      cards: [],
     };
+  },
+
+  mounted() {
+    axios.get('api/shops/1/pictures').then((response) =>{
+      this.cards = response.data;
+    });
   },
 
   methods: {
