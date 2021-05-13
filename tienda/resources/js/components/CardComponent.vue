@@ -77,8 +77,8 @@ export default {
         date_arrival: this.card.date_arrival,
         shop_id: this.shop
       };
-      axios.put('api/shops/' + this.shop + '/pictures/' + this.card.id, params).then((response) => {
       this.editMode = false;
+      axios.put('api/shops/' + this.shop + '/pictures/' + this.card.id, params).then((response) => {
       const card = response.data;
       this.$emit('update', card);
       });

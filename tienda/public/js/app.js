@@ -18652,8 +18652,8 @@ __webpack_require__.r(__webpack_exports__);
         date_arrival: this.card.date_arrival,
         shop_id: this.shop
       };
+      this.editMode = false;
       axios.put('api/shops/' + this.shop + '/pictures/' + this.card.id, params).then(function (response) {
-        _this2.editMode = false;
         var card = response.data;
 
         _this2.$emit('update', card);
