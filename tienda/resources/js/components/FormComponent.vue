@@ -1,4 +1,5 @@
 <template>
+<div id='form-component'>
   <form
     method="POST"
     class="formulario"
@@ -111,10 +112,12 @@
       </div>
     </div>
   </form>
+</div>
 </template>
 
 <script>
 export default {
+  name: 'form-component',
   data() {
     return {
       name: '',
@@ -161,34 +164,6 @@ export default {
         const card = response.data;
         this.$emit("new", card);
       });
-
-      /*let card = {
-        id: 2,
-        name: this.name,
-        description: this.description,
-        photo: this.photo,
-        price: this.price,
-        author: this.author,
-        name_fake: this.name_fake,
-        description_fake: this.description_fake,
-        photo_fake: this.photo_fake,
-        price_fake: this.price_fake,
-        date_arrival: this.date_arrival,
-        shop_id: 1
-      };*/
-      /*
-      
-      this.name = '';
-      this.description = '';
-      this.photo = '';
-      this.price = '';
-      this.author = '';
-      this.name_fake = '';
-      this.description_fake = '';
-      this.photo_fake = '';
-      this.price_fake = '';
-      this.date_arrival = '';
-      */
     },
   },
 };

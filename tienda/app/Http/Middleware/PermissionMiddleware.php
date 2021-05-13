@@ -18,13 +18,11 @@ class PermissionMiddleware
     public function handle(Request $request, Closure $next)
     {
         if(Auth::guest()){
-            return redirect('/home2');
-            //return view('fake_home');
+            return redirect('/home');
         }
-        //dd(Auth::user());
+        
         if(!Auth::user()->hasPermissionTo('vista_no_fake')){
-            return redirect('/home2');
-            //return view('fake_home');
+            return redirect('/home');
         }
         
         

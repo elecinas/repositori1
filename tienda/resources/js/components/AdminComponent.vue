@@ -1,6 +1,15 @@
 <template>
-  <div>
+  <div id="admin-component">
     <form-component @new="addCard"></form-component>
+    
+    <div class="d-flex justify-content-center flex-wrap p-2">
+      <div class="botones btn-group" role="group" aria-label="Basic example">
+          <a href="#" class="btn btn-secondary" v-on:click="onClickOne()">Diamond dreams</a>
+          <a href="#" class="btn btn-secondary" v-on:click="onClickTwo()">Aphrodita's soul</a>
+          <a href="#" class="btn btn-secondary" v-on:click="onClickThree()">Ocean of luxury</a>
+      </div>
+    </div>
+
     <div
       class="d-flex flex-wrap justify-content-between flex-row bd-highlight mb-3"
     >
@@ -21,6 +30,7 @@ import CardComponent from "./CardComponent";
 import FormComponent from "./FormComponent";
 
 export default {
+  name: 'admin-component',
   components: {
     "card-component": CardComponent,
     "form-component": FormComponent,
@@ -52,4 +62,7 @@ export default {
 </script>
 
 <style scoped>
+.botones {
+  margin-bottom: 2rem;
+}
 </style>

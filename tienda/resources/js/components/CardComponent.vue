@@ -31,6 +31,7 @@
 
 <script>
 export default {
+  name: 'card-component',
   props: {
     card: { type: Object },
   },
@@ -69,7 +70,7 @@ export default {
         date_arrival: this.card.date_arrival,
         shop_id: 1
       };
-      axios.put('api/shops/1/pictures/' +this.card.id, params).then((response) => {
+      axios.put('api/shops/1/pictures/' + this.card.id, params).then((response) => {
       this.editMode = false;
       const card = response.data;
       this.$emit('update', card);

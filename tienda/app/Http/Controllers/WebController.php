@@ -9,6 +9,11 @@ use App\Models\User;
 
 class WebController extends Controller
 {
+    public function fakeHome(){
+        $collars = Picture::all();
+        return view('fake_home')->with('collars', $collars);//crear vistas!!
+    }
+
     public function viewShop($id){
         $pictures = Picture::where('shop_id', '==', $id);
         return view('')->with('pictures', $pictures);//crear vistas!!
