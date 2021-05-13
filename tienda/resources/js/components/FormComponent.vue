@@ -118,6 +118,10 @@
 <script>
 export default {
   name: 'form-component',
+  props: {
+    shop: { type: Number || String, default: 1 },//variable botiga
+  },
+
   data() {
     return {
       name: '',
@@ -133,6 +137,12 @@ export default {
     };
   },
 
+  watch: {
+    shop: function(value){
+      console.log(value);
+    }
+  },
+
   methods: {
     newCard() {
       const params = {
@@ -146,7 +156,7 @@ export default {
         photo_fake: this.photo_fake,
         price_fake: this.price_fake,
         date_arrival: this.date_arrival,
-        shop_id: 1
+        shop_id: this.shop
       };
 
       this.name = '';
@@ -160,7 +170,7 @@ export default {
       this.price_fake = '';
       this.date_arrival = '';
 
-      axios.post('api/shops/1/pictures', params).then((response)=>{
+      axios.post('api/shops/' + this.shop + '/pictures', params).then((response)=>{
         const card = response.data;
         this.$emit("new", card);
       });

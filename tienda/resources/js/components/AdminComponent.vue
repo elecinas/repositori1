@@ -1,6 +1,6 @@
 <template>
   <div id="admin-component">
-    <form-component @new="addCard"></form-component>
+    <form-component :shop="shop" @new="addCard"></form-component>
     
     <div class="d-flex justify-content-center flex-wrap p-2">
       <div class="botones btn-group" role="group" aria-label="Basic example">
@@ -44,7 +44,7 @@ export default {
   },
 
   mounted() {
-    axios.get('api/shops/1/pictures').then((response) =>{
+    axios.get('api/shops/' + this.shop + '/pictures').then((response) =>{
       this.cards = response.data;
     });
   },
@@ -61,6 +61,9 @@ export default {
     },
     onClickShop(num) {//establim el id de la botiga escollida
       this.shop = num;
+      axios.get('api/shops/' + this.shop + '/pictures').then((response) =>{
+      this.cards = response.data;
+    });
     }
   },
 };

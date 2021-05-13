@@ -34,13 +34,12 @@ export default {
   name: 'card-component',
   props: {
     card: { type: Object },
-    shop: { type: Number | String, default: 1 },//variable botiga
+    shop: { type: Number || String, default: 1 },//variable botiga
   },
 
   data() {
     return {
       editMode: false,
-      shop_aux: 1,
     };
   },
 
@@ -51,13 +50,12 @@ export default {
   watch: {
     shop: function(value){
       console.log(value);
-      this.shop_aux = value;
     }
   },
 
   methods: {
     onClickDelete() {
-      axios.delete(`api/shops/1/pictures/${this.card.id}`).then((response) => {
+      axios.delete(`api/shops/${this.shop}/pictures/${this.card.id}`).then((response) => {
         console.log(response);
         this.$emit("delete");
       });
@@ -66,7 +64,6 @@ export default {
       this.editMode = true;
     },
     onClickUpdate() {
-      this.shop_aux = this.shop;
       const params = {
         name: this.card.name,
         description: this.card.description,
@@ -78,9 +75,9 @@ export default {
         photo_fake: this.card.photo_fake,
         price_fake: this.card.price_fake,
         date_arrival: this.card.date_arrival,
-        shop_id: this.shop_aux
+        shop_id: this.shop
       };
-      axios.put('api/shops/1/pictures/' + this.card.id, params).then((response) => {
+      axios.put('api/shops/' + this.shop + '/pictures/' + this.card.id, params).then((response) => {
       this.editMode = false;
       const card = response.data;
       this.$emit('update', card);

@@ -18559,7 +18559,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('api/shops/1/pictures').then(function (response) {
+    axios.get('api/shops/' + this.shop + '/pictures').then(function (response) {
       _this.cards = response.data;
     });
   },
@@ -18574,8 +18574,13 @@ __webpack_require__.r(__webpack_exports__);
       this.cards.splice(index, 1);
     },
     onClickShop: function onClickShop(num) {
+      var _this2 = this;
+
       //establim el id de la botiga escollida
       this.shop = num;
+      axios.get('api/shops/' + this.shop + '/pictures').then(function (response) {
+        _this2.cards = response.data;
+      });
     }
   }
 });
@@ -18600,15 +18605,14 @@ __webpack_require__.r(__webpack_exports__);
       type: Object
     },
     shop: {
-      type: Number | String,
+      type: Number || String,
       "default": 1
     } //variable botiga
 
   },
   data: function data() {
     return {
-      editMode: false,
-      shop_aux: 1
+      editMode: false
     };
   },
   created: function created() {
@@ -18617,14 +18621,13 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     shop: function shop(value) {
       console.log(value);
-      this.shop_aux = value;
     }
   },
   methods: {
     onClickDelete: function onClickDelete() {
       var _this = this;
 
-      axios["delete"]("api/shops/1/pictures/".concat(this.card.id)).then(function (response) {
+      axios["delete"]("api/shops/".concat(this.shop, "/pictures/").concat(this.card.id)).then(function (response) {
         console.log(response);
 
         _this.$emit("delete");
@@ -18636,7 +18639,6 @@ __webpack_require__.r(__webpack_exports__);
     onClickUpdate: function onClickUpdate() {
       var _this2 = this;
 
-      this.shop_aux = this.shop;
       var params = {
         name: this.card.name,
         description: this.card.description,
@@ -18648,9 +18650,9 @@ __webpack_require__.r(__webpack_exports__);
         photo_fake: this.card.photo_fake,
         price_fake: this.card.price_fake,
         date_arrival: this.card.date_arrival,
-        shop_id: this.shop_aux
+        shop_id: this.shop
       };
-      axios.put('api/shops/1/pictures/' + this.card.id, params).then(function (response) {
+      axios.put('api/shops/' + this.shop + '/pictures/' + this.card.id, params).then(function (response) {
         _this2.editMode = false;
         var card = response.data;
 
@@ -18675,6 +18677,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'form-component',
+  props: {
+    shop: {
+      type: Number || String,
+      "default": 1
+    } //variable botiga
+
+  },
   data: function data() {
     return {
       name: '',
@@ -18688,6 +18697,11 @@ __webpack_require__.r(__webpack_exports__);
       price_fake: '',
       date_arrival: ''
     };
+  },
+  watch: {
+    shop: function shop(value) {
+      console.log(value);
+    }
   },
   methods: {
     newCard: function newCard() {
@@ -18704,7 +18718,7 @@ __webpack_require__.r(__webpack_exports__);
         photo_fake: this.photo_fake,
         price_fake: this.price_fake,
         date_arrival: this.date_arrival,
-        shop_id: 1
+        shop_id: this.shop
       };
       this.name = '';
       this.description = '';
@@ -18716,7 +18730,7 @@ __webpack_require__.r(__webpack_exports__);
       this.photo_fake = '';
       this.price_fake = '';
       this.date_arrival = '';
-      axios.post('api/shops/1/pictures', params).then(function (response) {
+      axios.post('api/shops/' + this.shop + '/pictures', params).then(function (response) {
         var card = response.data;
 
         _this.$emit("new", card);
@@ -18768,10 +18782,11 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   var _component_card_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("card-component");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_form_component, {
+    shop: $data.shop,
     onNew: $options.addCard
   }, null, 8
   /* PROPS */
-  , ["onNew"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+  , ["shop", "onNew"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
     href: "#",
     "class": "btn btn-secondary",
     onClick: _cache[1] || (_cache[1] = function ($event) {
