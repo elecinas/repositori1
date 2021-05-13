@@ -18551,7 +18551,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      cards: []
+      cards: [],
+      shop: '1' //variable que decide la id de la tienda
+
     };
   },
   mounted: function mounted() {
@@ -18570,6 +18572,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     deleteCard: function deleteCard(index) {
       this.cards.splice(index, 1);
+    },
+    onClickShop: function onClickShop(num) {
+      //establim el id de la botiga escollida
+      this.shop = num;
     }
   }
 });
@@ -18592,15 +18598,27 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     card: {
       type: Object
-    }
+    },
+    shop: {
+      type: Number | String,
+      "default": 1
+    } //variable botiga
+
   },
   data: function data() {
     return {
-      editMode: false
+      editMode: false,
+      shop_aux: 1
     };
   },
   created: function created() {
     console.log(this.card);
+  },
+  watch: {
+    shop: function shop(value) {
+      console.log(value);
+      this.shop_aux = value;
+    }
   },
   methods: {
     onClickDelete: function onClickDelete() {
@@ -18618,6 +18636,7 @@ __webpack_require__.r(__webpack_exports__);
     onClickUpdate: function onClickUpdate() {
       var _this2 = this;
 
+      this.shop_aux = this.shop;
       var params = {
         name: this.card.name,
         description: this.card.description,
@@ -18629,7 +18648,7 @@ __webpack_require__.r(__webpack_exports__);
         photo_fake: this.card.photo_fake,
         price_fake: this.card.price_fake,
         date_arrival: this.card.date_arrival,
-        shop_id: 1
+        shop_id: this.shop_aux
       };
       axios.put('api/shops/1/pictures/' + this.card.id, params).then(function (response) {
         _this2.editMode = false;
@@ -18756,24 +18775,25 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     href: "#",
     "class": "btn btn-secondary",
     onClick: _cache[1] || (_cache[1] = function ($event) {
-      return _ctx.onClickOne();
+      return $options.onClickShop('1');
     })
   }, "Diamond dreams"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
     href: "#",
     "class": "btn btn-secondary",
     onClick: _cache[2] || (_cache[2] = function ($event) {
-      return _ctx.onClickTwo();
+      return $options.onClickShop('2');
     })
   }, "Aphrodita's soul"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
     href: "#",
     "class": "btn btn-secondary",
     onClick: _cache[3] || (_cache[3] = function ($event) {
-      return _ctx.onClickThree();
+      return $options.onClickShop('3');
     })
   }, "Ocean of luxury")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.cards, function (card, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_card_component, {
       key: card.id,
       card: card,
+      shop: $data.shop,
       onUpdate: function onUpdate($event) {
         return $options.updateCard(index);
       },
@@ -18789,7 +18809,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
 
     }, 1032
     /* PROPS, DYNAMIC_SLOTS */
-    , ["card", "onUpdate", "onDelete"]);
+    , ["card", "shop", "onUpdate", "onDelete"]);
   }), 128
   /* KEYED_FRAGMENT */
   ))])]);

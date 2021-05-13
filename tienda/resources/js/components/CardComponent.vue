@@ -34,16 +34,25 @@ export default {
   name: 'card-component',
   props: {
     card: { type: Object },
+    shop: { type: Number | String, default: 1 },//variable botiga
   },
 
   data() {
     return {
       editMode: false,
+      shop_aux: 1,
     };
   },
 
   created() {
     console.log(this.card);
+  },
+
+  watch: {
+    shop: function(value){
+      console.log(value);
+      this.shop_aux = value;
+    }
   },
 
   methods: {
@@ -57,6 +66,7 @@ export default {
       this.editMode = true;
     },
     onClickUpdate() {
+      this.shop_aux = this.shop;
       const params = {
         name: this.card.name,
         description: this.card.description,
@@ -68,7 +78,7 @@ export default {
         photo_fake: this.card.photo_fake,
         price_fake: this.card.price_fake,
         date_arrival: this.card.date_arrival,
-        shop_id: 1
+        shop_id: this.shop_aux
       };
       axios.put('api/shops/1/pictures/' + this.card.id, params).then((response) => {
       this.editMode = false;

@@ -4,9 +4,9 @@
     
     <div class="d-flex justify-content-center flex-wrap p-2">
       <div class="botones btn-group" role="group" aria-label="Basic example">
-          <a href="#" class="btn btn-secondary" v-on:click="onClickOne()">Diamond dreams</a>
-          <a href="#" class="btn btn-secondary" v-on:click="onClickTwo()">Aphrodita's soul</a>
-          <a href="#" class="btn btn-secondary" v-on:click="onClickThree()">Ocean of luxury</a>
+          <a href="#" class="btn btn-secondary" v-on:click="onClickShop('1')">Diamond dreams</a>
+          <a href="#" class="btn btn-secondary" v-on:click="onClickShop('2')">Aphrodita's soul</a>
+          <a href="#" class="btn btn-secondary" v-on:click="onClickShop('3')">Ocean of luxury</a>
       </div>
     </div>
 
@@ -17,6 +17,7 @@
       v-for="(card, index) in cards" 
       :key="card.id" 
       :card="card"
+      :shop="shop"
       @update="updateCard(index)"
       @delete="deleteCard(index)">
       <!-- @update="updateCard(index, ...arguments)" -->
@@ -38,6 +39,7 @@ export default {
   data() {
     return {
       cards: [],
+      shop: '1',//variable que decide la id de la tienda
     };
   },
 
@@ -57,6 +59,9 @@ export default {
     deleteCard(index) {
       this.cards.splice(index, 1);
     },
+    onClickShop(num) {//establim el id de la botiga escollida
+      this.shop = num;
+    }
   },
 };
 </script>
