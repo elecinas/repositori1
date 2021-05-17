@@ -1,18 +1,17 @@
 <template>
   <div id="admin-component">
     <form-component :shop="shop" @new="addCard"></form-component>
-    
     <div class="d-flex justify-content-center flex-wrap p-2">
       <div class="botones btn-group" role="group" aria-label="Basic example">
-          <a href="#" class="btn btn-secondary" v-on:click="onClickShop('1')">Diamond dreams</a>
-          <a href="#" class="btn btn-secondary" v-on:click="onClickShop('2')">Aphrodita's soul</a>
-          <a href="#" class="btn btn-secondary" v-on:click="onClickShop('3')">Ocean of luxury</a>
+          <a 
+          v-for="tienda in tiendas" 
+          :key="tienda.id"
+          href="#" 
+          class="btn btn-secondary" 
+          v-on:click="onClickShop(tienda.id)">{{ tienda.name }}</a>
       </div>
     </div>
-
-    <div
-      class="d-flex flex-wrap justify-content-between flex-row bd-highlight mb-3"
-    >
+    <div class="d-flex flex-wrap justify-content-between flex-row bd-highlight mb-3">
       <card-component 
       v-for="(card, index) in cards" 
       :key="card.id" 
@@ -39,13 +38,17 @@ export default {
   data() {
     return {
       cards: [],
-      shop: '1',//variable que decide la id de la tienda
+      shop: '1',// id de la tienda de la que se desean ver los cuadros
+      tiendas: [],//recibe todas las tiendas
     };
   },
 
   mounted() {
     axios.get('api/shops/' + this.shop + '/pictures').then((response) =>{
       this.cards = response.data;
+    });
+    axios.get('api/shops').then((response) =>{
+      this.tiendas = response.data;
     });
   },
 

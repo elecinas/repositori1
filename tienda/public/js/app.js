@@ -18552,7 +18552,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       cards: [],
-      shop: '1' //variable que decide la id de la tienda
+      shop: '1',
+      // id de la tienda de la que se desean ver los cuadros
+      tiendas: [] //recibe todas las tiendas
 
     };
   },
@@ -18561,6 +18563,9 @@ __webpack_require__.r(__webpack_exports__);
 
     axios.get('api/shops/' + this.shop + '/pictures').then(function (response) {
       _this.cards = response.data;
+    });
+    axios.get('api/shops').then(function (response) {
+      _this.tiendas = response.data;
     });
   },
   methods: {
@@ -18786,25 +18791,20 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     onNew: $options.addCard
   }, null, 8
   /* PROPS */
-  , ["shop", "onNew"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
-    href: "#",
-    "class": "btn btn-secondary",
-    onClick: _cache[1] || (_cache[1] = function ($event) {
-      return $options.onClickShop('1');
-    })
-  }, "Diamond dreams"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
-    href: "#",
-    "class": "btn btn-secondary",
-    onClick: _cache[2] || (_cache[2] = function ($event) {
-      return $options.onClickShop('2');
-    })
-  }, "Aphrodita's soul"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
-    href: "#",
-    "class": "btn btn-secondary",
-    onClick: _cache[3] || (_cache[3] = function ($event) {
-      return $options.onClickShop('3');
-    })
-  }, "Ocean of luxury")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.cards, function (card, index) {
+  , ["shop", "onNew"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.tiendas, function (tienda) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
+      key: tienda.id,
+      href: "#",
+      "class": "btn btn-secondary",
+      onClick: function onClick($event) {
+        return $options.onClickShop(tienda.id);
+      }
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(tienda.name), 9
+    /* TEXT, PROPS */
+    , ["onClick"]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.cards, function (card, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_card_component, {
       key: card.id,
       card: card,
