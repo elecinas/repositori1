@@ -8,10 +8,17 @@
     </style>
     <div class="bg-light p-5 rounded">
         <x-guest-layout>
-            <h1>API con AXIOS (CUADROS)</h1>
+            <h1>Control de obras en venta</h1>
             <p class="lead">El e-mail y password del administrador es: <strong>e-mail:</strong> admin@istra.dor | <strong>password:</strong> 12345678</p>
             
             {{--COMPONENTE VUE--}}
+            <!--
+            <script>
+                var myRequest = <?php echo $myRequest;?>;
+                var token = myRequest.token;
+                console.log(token);
+            </script>
+            -->
            <div id="app">
                 <admin-component></admin-component>
                 <script src="{{ mix('js/app.js') }}"></script>

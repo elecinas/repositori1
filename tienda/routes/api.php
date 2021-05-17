@@ -6,7 +6,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\PictureController;
 
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/shop', function (Request $request) {
     return $request->user();
 });
 

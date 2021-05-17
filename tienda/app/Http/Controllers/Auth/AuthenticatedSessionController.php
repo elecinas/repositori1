@@ -36,9 +36,12 @@ class AuthenticatedSessionController extends Controller
         //--ENDS-- crear accesstoken
 
         $request->session()->regenerate();
+        $myRequest = new Request();
+        $myRequest->request->add(['user'=> $user, 'token' => $token]);
         
-        //return redirect()->intended(RouteServiceProvider::HOME);
-        return redirect()->route('home', ['user'=> $user, 'token' => $token]);
+        //return view('home', compact('myRequest'));
+        return redirect()->route('home', compact('myRequest'));
+        //return response()->json($request, 200);
     }
 
     /**

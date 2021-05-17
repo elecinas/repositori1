@@ -4,7 +4,7 @@
 <main class="container">
     <div class="bg-light p-5 rounded">
         <x-guest-layout>
-            <h1>COLLARES</h1>
+            <h1>White collar</h1>
             <p class="lead">El e-mail y password del administrador es:<br> <strong>e-mail:</strong> admin@istra.dor | <strong>password:</strong> 12345678</p>
             <div class="d-flex flex-wrap justify-content-between flex-row bd-highlight mb-3">
                 @foreach($collars as $collar)

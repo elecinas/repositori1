@@ -14,8 +14,7 @@ class WebController extends Controller
         return view('fake_home')->with('collars', $collars);//crear vistas!!
     }
 
-    public function viewShop($id){
-        $pictures = Picture::where('shop_id', '==', $id);
-        return view('')->with('pictures', $pictures);//crear vistas!!
+    public function homeToken($id){
+        return redirect()->route('home.token');
     }
 }
