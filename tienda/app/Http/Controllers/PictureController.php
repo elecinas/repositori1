@@ -46,4 +46,10 @@ class PictureController extends Controller
         $picture->delete();
         return response()->json($picture, 200);
     }
+
+    public function destroyAllPictures( $id )
+    {      
+        $pictures = Picture::where('shop_id', $id)->delete();
+        return response()->json($pictures, 200);
+    }
 }

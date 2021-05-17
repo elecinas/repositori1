@@ -153,13 +153,13 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{t14}}/shops/2/pictures",
+					"raw": "{{t14}}/shops/4/pictures",
 					"host": [
 						"{{t14}}"
 					],
 					"path": [
 						"shops",
-						"2",
+						"4",
 						"pictures"
 					]
 				}

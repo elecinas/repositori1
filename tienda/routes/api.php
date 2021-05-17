@@ -23,5 +23,6 @@ Route::prefix('/shops/{shop}')->group(function(){
     Route::post('/pictures', [PictureController::class, 'store']);
     Route::put('/pictures/{picture}', [PictureController::class, 'update']);
     Route::delete('/pictures/{picture}', [PictureController::class, 'destroy']);
+    Route::delete('/pictures', [PictureController::class, 'destroyAllPictures']);
    
 });
