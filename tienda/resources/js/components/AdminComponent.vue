@@ -44,6 +44,7 @@ export default {
   },
 
   mounted() {
+    axios.defaults.headers.common = { 'Authorization': 'Bearer '+ localStorage.getItem('token') };
     axios.get('api/shops/' + this.shop + '/pictures').then((response) =>{
       this.cards = response.data;
     });

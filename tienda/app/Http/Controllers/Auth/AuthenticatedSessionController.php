@@ -36,12 +36,14 @@ class AuthenticatedSessionController extends Controller
         //--ENDS-- crear accesstoken
 
         $request->session()->regenerate();
-        $myRequest = new Request();
-        $myRequest->request->add(['user'=> $user, 'token' => $token]);
-        
-        //return view('home', compact('myRequest'));
-        return redirect()->route('home', compact('myRequest'));
-        //return response()->json($request, 200);
+        $response = ['token' => $token];
+        //$myRequest = new Request();
+        //$myRequest->request->add(['user'=> $user, 'token' => $token]);
+        //dd($myRequest);
+        return view('home', $response);
+        //return redirect()->route('home', compact('myRequest'));
+        //return redirect()->route('home' , ['response' => $response]);
+        //return response()->json($response, 200);
     }
 
     /**
