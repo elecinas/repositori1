@@ -10,7 +10,7 @@
                     <a class="nav-link active" aria-current="page" href="{{route('home')}}">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1"  aria-disabled="true">Disabled</a>
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                 </li>
             </ul>
             <div class="d-flex">
@@ -22,10 +22,8 @@
                     /Editor
                     @endif
                 </span>
-                <form id="form1" method="POST" action="{{ route('logout') }}">
-                    @csrf   
-                    <a class="ms-3" href="#" class="text-sm text-gray-700 underline" onclick="event.preventDefault();
-                            this.closest('form').submit();"><i class="zmdi zmdi-power"></i>Logout</a>
+                <form id="form1">
+                    <a class="ms-3" href="#" class="text-sm text-gray-700 underline" onclick="logout();"><i class="zmdi zmdi-power"></i>Logout</a>
                 </form>
                 @else
                 <a class="ms-3" href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
@@ -39,3 +37,19 @@
         </div>
     </div>
 </nav>
+<script>
+    $('#form1').on('click', function(e) {
+        axios.defaults.headers.common = {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+        };
+        axios
+            .post("api/logout")
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((err) => {
+                // Imprime el error
+                console.log(err, ":O");
+            });
+    });
+</script>

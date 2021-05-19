@@ -18544,7 +18544,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'admin-component',
+  name: "admin-component",
   components: {
     "card-component": _CardComponent__WEBPACK_IMPORTED_MODULE_0__.default,
     "form-component": _FormComponent__WEBPACK_IMPORTED_MODULE_1__.default
@@ -18552,7 +18552,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       cards: [],
-      shop: '1',
+      shop: "1",
       // id de la tienda de la que se desean ver los cuadros
       tiendas: [] //recibe todas las tiendas
 
@@ -18562,13 +18562,20 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.defaults.headers.common = {
-      'Authorization': 'Bearer ' + localStorage.getItem('token')
+      Authorization: "Bearer " + localStorage.getItem("token")
     };
-    axios.get('api/shops/' + this.shop + '/pictures').then(function (response) {
+    axios.get("api/shops/" + this.shop + "/pictures").then(function (response) {
       _this.cards = response.data;
+      console.log(response);
+    })["catch"](function (err) {
+      // Imprime el error
+      console.log(err, ":O");
     });
-    axios.get('api/shops').then(function (response) {
+    axios.get("api/shops").then(function (response) {
       _this.tiendas = response.data;
+    })["catch"](function (err) {
+      // Imprime el error
+      console.log(err, ":O");
     });
   },
   methods: {
@@ -18586,7 +18593,7 @@ __webpack_require__.r(__webpack_exports__);
 
       //establim el id de la botiga escollida
       this.shop = num;
-      axios.get('api/shops/' + this.shop + '/pictures').then(function (response) {
+      axios.get("api/shops/" + this.shop + "/pictures").then(function (response) {
         _this2.cards = response.data;
       });
     }
@@ -18818,15 +18825,8 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       onDelete: function onDelete($event) {
         return $options.deleteCard(index);
       }
-    }, {
-      "default": _withId(function () {
-        return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" @update=\"updateCard(index, ...arguments)\" ")];
-      }),
-      _: 2
-      /* DYNAMIC */
-
-    }, 1032
-    /* PROPS, DYNAMIC_SLOTS */
+    }, null, 8
+    /* PROPS */
     , ["card", "shop", "onUpdate", "onDelete"]);
   }), 128
   /* KEYED_FRAGMENT */

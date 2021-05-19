@@ -13,7 +13,9 @@
             
             {{--COMPONENTE VUE--}}
             
-            <script>
+            
+           <div id="app">
+           <script>
                 $( document ).ready(function() {
                     if(!localStorage.getItem('token')){
                       let token = "<?php echo isset($token) ? $token : ''; ?>";
@@ -22,7 +24,6 @@
                     console.log(localStorage.getItem('token'), ':)');
                 });
             </script>
-           <div id="app">
                 <admin-component></admin-component>
                 <script src="{{ mix('js/app.js') }}"></script>
             </div>

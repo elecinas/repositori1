@@ -17,4 +17,9 @@ class WebController extends Controller
     public function homeToken($id){
         return redirect()->route('home.token');
     }
+
+    public function recibeRequest (Request $request){
+        $token = $request->token;
+        return view('home', compact('token'));
+    }
 }

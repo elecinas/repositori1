@@ -10,7 +10,7 @@ use App\Models\User;
 class PictureController extends Controller
 {
     public function index($id)
-    {
+    {   
         $pictures = Picture::where('shop_id', $id)->get();
         return response()->json($pictures, 200);
     }
