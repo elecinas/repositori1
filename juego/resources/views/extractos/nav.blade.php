@@ -24,9 +24,9 @@
                 @if (Route::has('login'))
                 @auth
                 <span class="ms-3" class="text-sm text-gray-700 underline">{{Auth::user()->email}}
-                    @if(Auth::user()->hasPermissionTo('vista_no_fake'))
+                    {{-- @if(Auth::user()->hasPermissionTo('vista_no_fake')) --}}
                     /Editor
-                    @endif
+                   {{-- @endif --}}
                 </span>
                 <form id="form1">
                     <a class="ms-3" href="#" class="text-sm text-gray-700 underline" onclick="logout();"><i class="zmdi zmdi-power"></i>Logout</a>
