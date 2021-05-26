@@ -6,7 +6,7 @@
     <div class="row">
     <div class="col-6">
         <h1>Registro usuario</h1>
-        <form method="POST" action="{{ url('/login') }}" >
+        <form method="POST" action="{{ url('/register') }}" >
             @csrf
             <div class="form-group mt-2">
                 <label for="name">Nombre</label>

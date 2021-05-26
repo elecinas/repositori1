@@ -57,9 +57,17 @@ class AuthController extends Controller
         ]);
 
         //$token = $user->createToken('Personal Acces Token')->accessToken;
+        $data = $request->only('email', 'password');
+        if (auth()->attempt($data)) {
+            //$token = auth()->user()->createToken('Personal Access Token')->accessToken;
+            request()->session()->regenerate(); //Se encarga de evitar session fixation regenerando el token csrf
 
-        //return response()->json(['token' => $token], 200);
-        return response()->json(['user' => $user], 200);
+            //return response()->json($user, 200);
+            return redirect()->route('home', ['user' => $user]);
+
+        } else {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
     }
 
     public function logout(Request $request) {
