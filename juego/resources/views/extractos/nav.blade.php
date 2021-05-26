@@ -7,13 +7,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{route('home')}}">Inicio</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{route('home')}}">Juego</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{route('home')}}">Jugadores</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
@@ -26,10 +20,12 @@
                 <span class="ms-3" class="text-sm text-gray-700 underline">{{Auth::user()->email}}
                     {{-- @if(Auth::user()->hasPermissionTo('vista_no_fake')) --}}
                     /Editor
-                   {{-- @endif --}}
+                    {{-- @endif --}}
                 </span>
-                <form id="form1">
-                    <a class="ms-3" href="#" class="text-sm text-gray-700 underline" onclick="logout();"><i class="zmdi zmdi-power"></i>Logout</a>
+                <form id="form1" method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <a href="#" onclick="event.preventDefault();
+                                this.closest('form').submit();"><i class="zmdi zmdi-power"></i>Logout</a>
                 </form>
                 @else
                 <a class="ms-3" href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
