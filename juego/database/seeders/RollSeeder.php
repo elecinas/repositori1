@@ -21,12 +21,14 @@ class RollSeeder extends Seeder
         DB::table('rolls')->insert([
             'result_dice_1' => 1,
             'result_dice_2' => 6,
+            'result_total' => 7,
             'user_id' => 1
         ]);
 
         DB::table('rolls')->insert([
             'result_dice_1' => 3,
             'result_dice_2' => 5,
+            'result_total' => 8,
             'user_id' => 1
         ]);
     }

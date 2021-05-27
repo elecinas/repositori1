@@ -17,6 +17,7 @@ class CreateRollsTable extends Migration
             $table->id();
             $table->unsignedTinyInteger('result_dice_1');
             $table->unsignedTinyInteger('result_dice_2');
+            $table->unsignedTinyInteger('result_total');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
             $table->timestamps();

@@ -12,7 +12,6 @@
                         class="form-control"
                         id="email"
                         value=""
-                        placeholder="example@mail.com"
                     />
                 </div>
                 <div class="form-group mt-2">
@@ -23,7 +22,6 @@
                         class="form-control"
                         id="password"
                         value=""
-                        placeholder="password"
                     />
                 </div>
                 <button type="submit" class="btn btn-dark mt-4">Submit</button>
@@ -42,7 +40,6 @@
                         class="form-control"
                         id="name"
                         value=""
-                        placeholder="name"
                     />
                 </div>
                 <div class="form-group mt-2">
@@ -53,7 +50,6 @@
                         class="form-control"
                         id="email"
                         value=""
-                        placeholder="example@email.com"
                     />
                 </div>
                 <div class="form-group mt-2">
@@ -64,7 +60,6 @@
                         class="form-control"
                         id="password"
                         value=""
-                        placeholder="password"
                     />
                 </div>
                 <button type="submit" class="btn btn-dark mt-4">Submit</button>

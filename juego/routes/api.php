@@ -5,11 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PlayersController;
 use App\Http\Controllers\GamesController;
 use App\Http\Controllers\TokenController;
-
+/*
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+*/
 Route::prefix('/players')->group(function () {
     Route::get('/', [PlayersController::class, 'index'])->name('players.index');
     Route::post('/', [PlayersController::class, 'create'])->name('players.create');
