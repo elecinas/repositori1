@@ -71,6 +71,5 @@ class TokenController extends Controller
                 'message' => 'Failed logout, please try again!'
             ], status:422);
         }
-        //@TODO: try-catch del logout + añadir Authorization a las rutas del juego
     }
 }

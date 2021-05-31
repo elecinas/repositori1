@@ -41,7 +41,7 @@ class GamesController extends Controller
     }
 
     public function ranking()
-    {   // retorna el ranking mig de tots els jugadors del sistema. És a dir, el percentatge mig d’èxits.
+    {   // retorna el ranking mig dels jugadors (percentatge mig d’èxits).
         $players_array = $this->playersResults();//trait PlayersArray.php
 
         //esto debe ordenar descendentemente por resultados
@@ -70,7 +70,7 @@ class GamesController extends Controller
 
         $loser = User::find($loser_id);
 
-        return response()->json($loser, 200);
+        return response()->json(['loser' => $loser, 'percentage' => $val_min], 200);
     }
 
     public function winner()
@@ -88,6 +88,6 @@ class GamesController extends Controller
 
         $winner = User::find($loser_id);
 
-        return response()->json($winner, 200);
+        return response()->json(['winner' => $winner, 'percentage' => $val_min], 200);
     }
 }
