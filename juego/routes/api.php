@@ -27,5 +27,5 @@ Route::prefix('/players')->group(function () {
 Route::post('/login', [TokenController::class, 'login'])->name('login');
 Route::group(['middleware' => ['jwt.auth']], function(){
     Route::post('/refresh', [TokenController::class, 'refreshToken']);
-    Route::get('/expire', [TokenController::class, 'expireToken']);
+    Route::get('/logout', [TokenController::class, 'logout']);
 });
