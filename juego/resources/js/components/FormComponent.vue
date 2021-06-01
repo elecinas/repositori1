@@ -34,31 +34,21 @@ export default {
     data() {
         return {
             email: "",
-            password: "",
-            r_name: "",
-            r_email: "",
-            r_password: "",
+            password: ""
         };
     },
 
     methods: {
         loginPlayer() {
-            let user = {
-                id: 1,
+            const params = {
                 email: this.email,
                 password: this.password,
             };
-            this.$emit("new", user);
-        },
 
-        registerPlayer() {
-            let user = {
-                id: 1,
-                name: this.r_name,
-                email: this.r_email,
-                password: this.r_password,
-            };
-            this.$emit("new", user);
+            axios.post("api/login", params).then((response) => {
+                const user = response.data;
+                this.$emit("new", user);
+            });
         },
     },
 };

@@ -1,7 +1,14 @@
 <template>
     <div id="game-component">
-        <h1>activeUser</h1>
-        <div class="tablero-juego d-flex align-items-center justify-content-around">
+        <h1>¡Bienvenido/a {{ player_name }}!</h1>
+        <div
+            class="
+                tablero-juego
+                d-flex
+                align-items-center
+                justify-content-around
+            "
+        >
             <div class="dados d-flex justify-content-around">
                 <img
                     class="dice p-2"
@@ -31,7 +38,14 @@
                 -->
             </div>
         </div>
-        <button type="button" class="btn btn-dark">Lanzar dados</button>
+        <div class="botones btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-outline-dark">
+                Lanzar dados
+            </button>
+            <button type="button" class="btn btn-outline-dark">
+                Salir del juego
+            </button>
+        </div>
         <div class="resultados">
             <h4>Tus resultados</h4>
             <table class="table table-hover table-secondary">
@@ -46,29 +60,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>2021-05-31 12:44:47</td>
-                        <td>2</td>
-                        <td>5</td>
-                        <td>7</td>
-                        <td>¡Exito!</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>2021-05-12 10:34:09</td>
-                        <td>3</td>
-                        <td>3</td>
-                        <td>6</td>
-                        <td>Fracaso</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>2021-06-12 08:12:45</td>
-                        <td>6</td>
-                        <td>5</td>
-                        <td>11</td>
-                        <td>Fracaso</td>
+                    <tr v-for="roll in rolls" :key="roll.id">
+                        <th scope="row">{{ roll.id }}</th>
+                        <td>{{ roll.created_at }}</td>
+                        <td>{{ roll.result_dice_1 }}</td>
+                        <td>{{ roll.result_dice_2 }}</td>
+                        <td>{{ roll.result_total }}</td>
+                        <td v-if="roll.result_total == 7">¡exito!</td>
+                        <td v-else>¡fracaso!</td>
                     </tr>
                 </tbody>
             </table>
@@ -84,6 +83,32 @@
 <script>
 export default {
     name: "game-component",
+    data() {
+        return {
+            player_name: localStorage.getItem("player_name"),
+            player_id: localStorage.getItem("player_id"),
+            rolls: [],
+        };
+    },
+
+    mounted() {
+        axios.defaults.headers.common = {
+            Authorization: "Bearer " + localStorage.getItem("player_token"),
+        };
+        axios
+            .get("api/players/" + this.player_id + "/games")
+            .then((response) => {
+                this.rolls = response.data;
+                //console.log(this.rolls, 'TIRADAS!!!');
+            })
+            .catch((err) => {
+                console.log(err, ":O");
+            });
+    },
+
+    methods:{
+        //
+    }
 };
 </script>
 

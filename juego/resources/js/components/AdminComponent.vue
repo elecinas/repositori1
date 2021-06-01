@@ -44,7 +44,7 @@ export default {
     data(){
         return {
             activeUser: false,
-            players: []
+            players: [],
         }
     },
 
@@ -63,10 +63,17 @@ export default {
         
         loginUser(user){
             this.activeUser = true;
+            localStorage.setItem("player_name", user.user.name);
+            localStorage.setItem("player_id", user.user.id);
+            localStorage.setItem("player_token", user.token);
+            //console.log(user.token, "token!!!!!!!");
         },
 
         registerUser(user){
             this.activeUser = true;
+            localStorage.setItem("player_name", user.user.name);
+            localStorage.setItem("player_id", user.user.id);
+            console.log(user, ":D");
         }
     }
 };

@@ -50,13 +50,20 @@ export default {
 
     methods: {
         registerPlayer() {
-            let user = {
-                id: 1,
+            const params = {
                 name: this.name,
                 email: this.email,
                 password: this.password,
             };
-            this.$emit("new", user);
+
+            this.name = "";
+            this.email = "";
+            this.password = "";
+
+            axios.post("api/players", params).then((response) => {
+                const user = response.data;
+                this.$emit("new", user);
+            });
         },
     },
 };
