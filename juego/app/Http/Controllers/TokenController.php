@@ -9,29 +9,37 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Validator;
 
 class TokenController extends Controller
 {
     public function login(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->only('email', 'password'), [
             'email' => 'required|email',
             'password' => 'required|min:8'
         ]);
+        
+        if($validator->fails()){
+            return response()->json([
+                'success' => 'false',
+                'error' => $validator->errors()
+            ], 422);
+        }
 
-        $data = [
-            'email' => $request->email,
-            'password' => $request->password
-        ];
+        $token = JWTAuth::attempt($request->only('email', 'password')); //creando el Jason Web Token
 
-        if (auth()->attempt($data)) {
-            $token = JWTAuth::attempt($data); //creando el Jason Web Token
-            $id = auth()->user()->id;
-            $user = User::find($id);
-
-            return response()->json(['token' => $token, 'user' => $user], 200);
+        if($token){
+            return response()->json([
+                'success' => 'true',
+                'token' => $token,
+                'user' => Auth::user()
+            ], 200);
         } else {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Unauthorized'
+            ], 401);
         }
     }
 

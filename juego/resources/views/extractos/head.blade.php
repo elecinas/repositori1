@@ -15,7 +15,7 @@
     <link rel="icon" href="{{ asset('../public/favicon.ico') }}">
     
     <!-- Custom styles for this template -->
-    <link href="{{ asset('navbar-top-fixed.css') }}" rel="stylesheet">
+    <!--<link href="{{ asset('navbar-top-fixed.css') }}" rel="stylesheet">-->
     <!--Estilos Esther-->
     <link  rel="stylesheet" href="{{ asset('css/style.css') }}" media="all">
     

@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GamesController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Roll;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Validator;
 
 class PlayersController extends Controller
 {
@@ -19,29 +21,38 @@ class PlayersController extends Controller
 
     public function create(Request $request)
     {   //crea un jugador + token (JWT)
-        //valida el request
-        $this->validate($request, [
+        $validator = Validator::make($request->only('email', 'name', 'password'), [
             'email' => 'required|email|unique:users,email,{$this->user->id}',
             'name' => 'required|unique:users,name,{$this->user->id}',
             'password' => 'required|min:8'
         ]);
-        //crea el registe a la taula users
+
+        if($validator->fails()){
+            return response()->json([
+                'success' => 'false',
+                'error' => $validator->errors()
+            ], 422);
+        }
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
 
-        //l'autentiquem
-        $data = $request->only('email', 'password');
-        if (auth()->attempt($data)) {
-            $token = JWTAuth::attempt($data); //creando el Jason Web Token
-            $id = auth()->user()->id;
-            $user = User::find($id);
+        $token = JWTAuth::attempt($request->only('email', 'password')); //creando el Jason Web Token
 
-            return response()->json(['token' => $token, 'user' => $user], 200);
+        if($token){
+            return response()->json([
+                'success' => 'true',
+                'token' => $token,
+                'user' => Auth::user()
+            ], 200);
         } else {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Unauthorized'
+            ], 401);
         }
     }
 

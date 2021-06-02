@@ -10,7 +10,7 @@
                 <form-component @new="loginUser" />
                 <form-component2 @new="registerUser" />
             </div>
-            <div class="table">
+            <div class="table_pack">
                 <h4>Resultados de todos los jugadores</h4>
                 <table class="table table-hover table-secondary">
                     <thead>
@@ -114,4 +114,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.table_pack{
+    margin-top: 2rem;
+    margin-bottom: -2rem;
+}
+</style>

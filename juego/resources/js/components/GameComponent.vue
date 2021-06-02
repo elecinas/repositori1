@@ -11,42 +11,8 @@
             "
         >
             <div class="dados d-flex justify-content-around">
-                <img
-                    id="dice_1"
-                    class="dice p-2"
-                    :src="image1"
-                />
-                <img
-                    id="dice_2"
-                    class="dice p-2"
-                    :src="img_dice_2"
-                />
-                <!--
-                <img
-                    class="dice p-2"
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Dice-1-b.svg/836px-Dice-1-b.svg.png"
-                />
-                <img
-                    class="dice p-2"
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Dice-2-b.svg/836px-Dice-2-b.svg.png"
-                />
-                <img
-                    class="dice p-2"
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Dice-3-b.svg/1024px-Dice-3-b.svg.png"
-                />
-                <img
-                    class="dice p-2"
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Dice-4-b.svg/557px-Dice-4-b.svg.png"
-                />
-                <img
-                    class="dice p-2"
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Dice-5-b.svg/1200px-Dice-5-b.svg.png"
-                />
-                <img
-                    class="dice p-2"
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Dice-6-b.svg/768px-Dice-6-b.svg.png"
-                />
-                -->
+                <img id="dice_1" class="dice p-2" :src="img_dice_1" />
+                <img id="dice_2" class="dice p-2" :src="img_dice_2" />
             </div>
         </div>
         <div class="botones">
@@ -129,34 +95,34 @@ export default {
             value_dice_2: 1,
             value_total: 1,
             img_dice_1:
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Dice-1-b.svg/836px-Dice-1-b.svg.png",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Dice-6-b.svg/768px-Dice-6-b.svg.png",
             img_dice_2:
                 "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Dice-2-b.svg/836px-Dice-2-b.svg.png",
         };
     },
 
     mounted() {
-        axios.defaults.headers.common = {
-            Authorization: "Bearer " + localStorage.getItem("player_token"),
-        };
-        axios
-            .get("api/players/" + this.player_id + "/games")
-            .then((response) => {
-                this.rolls = response.data;
-                //console.log(this.rolls, 'TIRADAS!!!');
-            })
-            .catch((err) => {
-                console.log(err, ":O");
-            });
-        axios
-            .get("api/players/" + this.player_id + "/percentage")
-            .then((response) => {
-                this.player_percentage = response.data;
-                //console.log(this.player_percentage, 'PORCENTAJE!!!');
-            })
-            .catch((err) => {
-                console.log(err, ":O");
-            });
+        if (localStorage.getItem("player_token")) {
+            axios.defaults.headers.common = {
+                Authorization: "Bearer " + localStorage.getItem("player_token"),
+            };
+            axios
+                .get("api/players/" + this.player_id + "/games")
+                .then((response) => {
+                    this.rolls = response.data;
+                })
+                .catch((err) => {
+                    console.log(err, ":O");
+                });
+            axios
+                .get("api/players/" + this.player_id + "/percentage")
+                .then((response) => {
+                    this.player_percentage = response.data;
+                })
+                .catch((err) => {
+                    console.log(err, ":O");
+                });
+        }
     },
 
     methods: {
@@ -182,26 +148,32 @@ export default {
                 });
         },
 
-        selectDiceValue(value){
-            var img = '';
+        selectDiceValue(value) {
+            var img = "";
             switch (value) {
                 case 1:
-                    img = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Dice-1-b.svg/836px-Dice-1-b.svg.png";
+                    img =
+                        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Dice-1-b.svg/836px-Dice-1-b.svg.png";
                     break;
                 case 2:
-                    img = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Dice-1-b.svg/836px-Dice-2-b.svg.png";
+                    img =
+                        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Dice-2-b.svg/1200px-Dice-2-b.svg.png";
                     break;
                 case 3:
-                    img = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Dice-1-b.svg/836px-Dice-3-b.svg.png";
+                    img =
+                        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Dice-3-b.svg/1024px-Dice-3-b.svg.png";
                     break;
                 case 4:
-                    img = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Dice-1-b.svg/836px-Dice-4-b.svg.png";
+                    img =
+                        "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Dice-4-b.svg/557px-Dice-4-b.svg.png";
                     break;
                 case 5:
-                    img = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Dice-1-b.svg/836px-Dice-5-b.svg.png";
+                    img =
+                        "https://upload.wikimedia.org/wikipedia/commons/0/08/Dice-5-b.svg";
                     break;
                 case 6:
-                    img = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Dice-1-b.svg/836px-Dice-6-b.svg.png";
+                    img =
+                        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Dice-6-b.svg/768px-Dice-6-b.svg.png";
                     break;
             }
             return img;
@@ -214,19 +186,47 @@ export default {
             this.img_dice_1 = this.selectDiceValue(this.value_dice_1);
             this.img_dice_2 = this.selectDiceValue(this.value_dice_2);
 
-            console.log(this.img_dice_1, this.img_dice_2, "dados lanzadooos!!!!");
-        },
+            const params = {
+                result_dice_1: this.value_dice_1,
+                result_dice_2: this.value_dice_2,
+                result_total: this.value_total,
+                user_id: this.player_id,
+            };
 
-        getImage(img){
-            return img;
+            axios //crea la tirada
+                .post("api/players/" + this.player_id + "/games", params)
+                .then((response) => {
+                    console.log(response.data);
+                    this.$emit("reloadRanking");
+                })
+                .catch((err) => {
+                    console.log(err, ":O");
+                });
+
+            axios //actualiza la lista de tiradas del jugador
+                .get("api/players/" + this.player_id + "/games")
+                .then((response) => {
+                    this.rolls = response.data;
+                })
+                .catch((err) => {
+                    console.log(err, ":O");
+                });
+            axios //actualiza el porcentaje del jugador
+                .get("api/players/" + this.player_id + "/percentage")
+                .then((response) => {
+                    this.player_percentage = response.data;
+                })
+                .catch((err) => {
+                    console.log(err, ":O");
+                });
         },
     },
 
     computed: {
-        image1(){
+        image1() {
             return this.img_dice_1;
-        }
-    }
+        },
+    },
 };
 </script>
 
