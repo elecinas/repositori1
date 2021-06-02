@@ -16596,12 +16596,18 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      activeUser: false,
+      activeUser: true,
       players: []
     };
   },
   mounted: function mounted() {
     var _this = this;
+
+    if (localStorage.getItem("player_token")) {
+      this.activeUser = true;
+    } else {
+      this.activeUser = false;
+    }
 
     axios.get("api/players/ranking").then(function (response) {
       _this.players = response.data;
@@ -16614,13 +16620,36 @@ __webpack_require__.r(__webpack_exports__);
       this.activeUser = true;
       localStorage.setItem("player_name", user.user.name);
       localStorage.setItem("player_id", user.user.id);
-      localStorage.setItem("player_token", user.token); //console.log(user.token, "token!!!!!!!");
+      localStorage.setItem("player_token", user.token);
     },
     registerUser: function registerUser(user) {
+      var _this2 = this;
+
       this.activeUser = true;
       localStorage.setItem("player_name", user.user.name);
       localStorage.setItem("player_id", user.user.id);
-      console.log(user, ":D");
+      localStorage.setItem("player_token", user.token); //actualizamos la tabla de rankings para que se vea el nuevo usuario
+
+      axios.get("api/players/ranking").then(function (response) {
+        _this2.players = response.data;
+      })["catch"](function (err) {
+        console.log(err, ":O");
+      });
+    },
+    //Llamamos a esta función cuando se hace logout desde GameComponent
+    falseActiveUser: function falseActiveUser() {
+      this.activeUser = false;
+    },
+    //Llamamos a esta función al vaciar los registros de un jugador desde GameComponent
+    //actualiza el ranking
+    recallRanking: function recallRanking() {
+      var _this3 = this;
+
+      axios.get("api/players/ranking").then(function (response) {
+        _this3.players = response.data;
+      })["catch"](function (err) {
+        console.log(err, ":O");
+      });
     }
   }
 });
@@ -16721,11 +16750,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "game-component",
+  props: {//activeUser: { type: Boolean },
+    //card: { type: Object },
+    //shop: { type: Number || String, default: 1 }, //variable botiga
+  },
   data: function data() {
     return {
       player_name: localStorage.getItem("player_name"),
       player_id: localStorage.getItem("player_id"),
-      rolls: []
+      rolls: [],
+      //listado de tiradas del jugador
+      player_percentage: "",
+      value_dice_1: 1,
+      value_dice_2: 1,
+      value_total: 1,
+      img_dice_1: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Dice-1-b.svg/836px-Dice-1-b.svg.png",
+      img_dice_2: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Dice-2-b.svg/836px-Dice-2-b.svg.png"
     };
   },
   mounted: function mounted() {
@@ -16739,8 +16779,81 @@ __webpack_require__.r(__webpack_exports__);
     })["catch"](function (err) {
       console.log(err, ":O");
     });
+    axios.get("api/players/" + this.player_id + "/percentage").then(function (response) {
+      _this.player_percentage = response.data; //console.log(this.player_percentage, 'PORCENTAJE!!!');
+    })["catch"](function (err) {
+      console.log(err, ":O");
+    });
   },
-  methods: {//
+  methods: {
+    onClickDestroy: function onClickDestroy() {
+      var _this2 = this;
+
+      axios["delete"]("api/players/".concat(this.player_id, "/games")).then(function (response) {
+        _this2.rolls = [], console.log(response);
+
+        _this2.$emit("reloadRanking");
+      });
+    },
+    onClickLogout: function onClickLogout() {
+      var _this3 = this;
+
+      axios.get("api/logout").then(function (response) {
+        console.log(response, "LOGOUT!!!");
+        localStorage.clear();
+
+        _this3.$emit("logout");
+      })["catch"](function (err) {
+        console.log(err, ":O");
+      });
+    },
+    selectDiceValue: function selectDiceValue(value) {
+      var img = '';
+
+      switch (value) {
+        case 1:
+          img = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Dice-1-b.svg/836px-Dice-1-b.svg.png";
+          break;
+
+        case 2:
+          img = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Dice-1-b.svg/836px-Dice-2-b.svg.png";
+          break;
+
+        case 3:
+          img = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Dice-1-b.svg/836px-Dice-3-b.svg.png";
+          break;
+
+        case 4:
+          img = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Dice-1-b.svg/836px-Dice-4-b.svg.png";
+          break;
+
+        case 5:
+          img = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Dice-1-b.svg/836px-Dice-5-b.svg.png";
+          break;
+
+        case 6:
+          img = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Dice-1-b.svg/836px-Dice-6-b.svg.png";
+          break;
+      }
+
+      return img;
+    },
+    onClickRoll: function onClickRoll() {
+      this.value_dice_1 = Math.floor(6 * Math.random() + 1);
+      this.value_dice_2 = Math.floor(6 * Math.random() + 1);
+      this.value_total = this.value_dice_1 + this.value_dice_2;
+      this.img_dice_1 = this.selectDiceValue(this.value_dice_1);
+      this.img_dice_2 = this.selectDiceValue(this.value_dice_2);
+      console.log(this.img_dice_1, this.img_dice_2, "dados lanzadooos!!!!");
+    },
+    getImage: function getImage(img) {
+      return img;
+    }
+  },
+  computed: {
+    image1: function image1() {
+      return this.img_dice_1;
+    }
   }
 });
 
@@ -16842,7 +16955,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.dice[data-v-5cec6160] {\r\n    width: 80px;\r\n    height: 80px;\n}\n.dados[data-v-5cec6160] {\r\n    width: 60%;\n}\n.tablero-juego[data-v-5cec6160] {\r\n    border-radius: 15px;\r\n    background-color: white;\r\n    border: black 2px solid;\r\n    height: 10rem;\r\n    width: 20rem;\n}\nh1[data-v-5cec6160],\r\n.tablero-juego[data-v-5cec6160] {\r\n    margin-bottom: 1rem;\n}\nbutton[data-v-5cec6160] {\r\n    margin-bottom: 2rem;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.dice[data-v-5cec6160] {\r\n    width: 80px;\r\n    height: 80px;\n}\n.dados[data-v-5cec6160] {\r\n    width: 60%;\n}\n.botones[data-v-5cec6160] {\r\n    width: 100%;\r\n    text-align: center;\n}\n.tablero-juego[data-v-5cec6160] {\r\n    border-radius: 15px;\r\n    background-color: white;\r\n    border: black 2px solid;\r\n    height: 10rem;\r\n    width: 100%;\n}\nh1[data-v-5cec6160],\r\n.tablero-juego[data-v-5cec6160] {\r\n    margin-bottom: 1rem;\n}\nbutton[data-v-5cec6160] {\r\n    margin-bottom: 2rem;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -34342,12 +34455,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _AdminComponent_vue_vue_type_template_id_a603f2ce_bindings_activeUser_data_players_data_loginUser_options_registerUser_options___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminComponent.vue?vue&type=template&id=a603f2ce&bindings={"activeUser":"data","players":"data","loginUser":"options","registerUser":"options"} */ "./resources/js/components/AdminComponent.vue?vue&type=template&id=a603f2ce&bindings={\"activeUser\":\"data\",\"players\":\"data\",\"loginUser\":\"options\",\"registerUser\":\"options\"}");
+/* harmony import */ var _AdminComponent_vue_vue_type_template_id_a603f2ce_bindings_activeUser_data_players_data_loginUser_options_registerUser_options_falseActiveUser_options_recallRanking_options___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminComponent.vue?vue&type=template&id=a603f2ce&bindings={"activeUser":"data","players":"data","loginUser":"options","registerUser":"options","falseActiveUser":"options","recallRanking":"options"} */ "./resources/js/components/AdminComponent.vue?vue&type=template&id=a603f2ce&bindings={\"activeUser\":\"data\",\"players\":\"data\",\"loginUser\":\"options\",\"registerUser\":\"options\",\"falseActiveUser\":\"options\",\"recallRanking\":\"options\"}");
 /* harmony import */ var _AdminComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminComponent.vue?vue&type=script&lang=js */ "./resources/js/components/AdminComponent.vue?vue&type=script&lang=js");
 
 
 
-_AdminComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _AdminComponent_vue_vue_type_template_id_a603f2ce_bindings_activeUser_data_players_data_loginUser_options_registerUser_options___WEBPACK_IMPORTED_MODULE_0__.render
+_AdminComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _AdminComponent_vue_vue_type_template_id_a603f2ce_bindings_activeUser_data_players_data_loginUser_options_registerUser_options_falseActiveUser_options_recallRanking_options___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -34428,7 +34541,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _GameComponent_vue_vue_type_template_id_5cec6160_scoped_true_bindings_player_name_data_player_id_data_rolls_data___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GameComponent.vue?vue&type=template&id=5cec6160&scoped=true&bindings={"player_name":"data","player_id":"data","rolls":"data"} */ "./resources/js/components/GameComponent.vue?vue&type=template&id=5cec6160&scoped=true&bindings={\"player_name\":\"data\",\"player_id\":\"data\",\"rolls\":\"data\"}");
+/* harmony import */ var _GameComponent_vue_vue_type_template_id_5cec6160_scoped_true_bindings_player_name_data_player_id_data_rolls_data_player_percentage_data_value_dice_1_data_value_dice_2_data_value_total_data_img_dice_1_data_img_dice_2_data_onClickDestroy_options_onClickLogout_options_selectDiceValue_options_onClickRoll_options_getImage_options_image1_options___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GameComponent.vue?vue&type=template&id=5cec6160&scoped=true&bindings={"player_name":"data","player_id":"data","rolls":"data","player_percentage":"data","value_dice_1":"data","value_dice_2":"data","value_total":"data","img_dice_1":"data","img_dice_2":"data","onClickDestroy":"options","onClickLogout":"options","selectDiceValue":"options","onClickRoll":"options","getImage":"options","image1":"options"} */ "./resources/js/components/GameComponent.vue?vue&type=template&id=5cec6160&scoped=true&bindings={\"player_name\":\"data\",\"player_id\":\"data\",\"rolls\":\"data\",\"player_percentage\":\"data\",\"value_dice_1\":\"data\",\"value_dice_2\":\"data\",\"value_total\":\"data\",\"img_dice_1\":\"data\",\"img_dice_2\":\"data\",\"onClickDestroy\":\"options\",\"onClickLogout\":\"options\",\"selectDiceValue\":\"options\",\"onClickRoll\":\"options\",\"getImage\":\"options\",\"image1\":\"options\"}");
 /* harmony import */ var _GameComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GameComponent.vue?vue&type=script&lang=js */ "./resources/js/components/GameComponent.vue?vue&type=script&lang=js");
 /* harmony import */ var _GameComponent_vue_vue_type_style_index_0_id_5cec6160_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./GameComponent.vue?vue&type=style&index=0&id=5cec6160&scoped=true&lang=css */ "./resources/js/components/GameComponent.vue?vue&type=style&index=0&id=5cec6160&scoped=true&lang=css");
 
@@ -34436,7 +34549,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 ;
-_GameComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _GameComponent_vue_vue_type_template_id_5cec6160_scoped_true_bindings_player_name_data_player_id_data_rolls_data___WEBPACK_IMPORTED_MODULE_0__.render
+_GameComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _GameComponent_vue_vue_type_template_id_5cec6160_scoped_true_bindings_player_name_data_player_id_data_rolls_data_player_percentage_data_value_dice_1_data_value_dice_2_data_value_total_data_img_dice_1_data_img_dice_2_data_onClickDestroy_options_onClickLogout_options_selectDiceValue_options_onClickRoll_options_getImage_options_image1_options___WEBPACK_IMPORTED_MODULE_0__.render
 _GameComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__scopeId = "data-v-5cec6160"
 /* hot reload */
 if (false) {}
@@ -34511,18 +34624,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/AdminComponent.vue?vue&type=template&id=a603f2ce&bindings={\"activeUser\":\"data\",\"players\":\"data\",\"loginUser\":\"options\",\"registerUser\":\"options\"}":
-/*!*********************************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/AdminComponent.vue?vue&type=template&id=a603f2ce&bindings={"activeUser":"data","players":"data","loginUser":"options","registerUser":"options"} ***!
-  \*********************************************************************************************************************************************************************************/
+/***/ "./resources/js/components/AdminComponent.vue?vue&type=template&id=a603f2ce&bindings={\"activeUser\":\"data\",\"players\":\"data\",\"loginUser\":\"options\",\"registerUser\":\"options\",\"falseActiveUser\":\"options\",\"recallRanking\":\"options\"}":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/AdminComponent.vue?vue&type=template&id=a603f2ce&bindings={"activeUser":"data","players":"data","loginUser":"options","registerUser":"options","falseActiveUser":"options","recallRanking":"options"} ***!
+  \***************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminComponent_vue_vue_type_template_id_a603f2ce_bindings_activeUser_data_players_data_loginUser_options_registerUser_options___WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminComponent_vue_vue_type_template_id_a603f2ce_bindings_activeUser_data_players_data_loginUser_options_registerUser_options_falseActiveUser_options_recallRanking_options___WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminComponent_vue_vue_type_template_id_a603f2ce_bindings_activeUser_data_players_data_loginUser_options_registerUser_options___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AdminComponent.vue?vue&type=template&id=a603f2ce&bindings={"activeUser":"data","players":"data","loginUser":"options","registerUser":"options"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/AdminComponent.vue?vue&type=template&id=a603f2ce&bindings={\"activeUser\":\"data\",\"players\":\"data\",\"loginUser\":\"options\",\"registerUser\":\"options\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminComponent_vue_vue_type_template_id_a603f2ce_bindings_activeUser_data_players_data_loginUser_options_registerUser_options_falseActiveUser_options_recallRanking_options___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AdminComponent.vue?vue&type=template&id=a603f2ce&bindings={"activeUser":"data","players":"data","loginUser":"options","registerUser":"options","falseActiveUser":"options","recallRanking":"options"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/AdminComponent.vue?vue&type=template&id=a603f2ce&bindings={\"activeUser\":\"data\",\"players\":\"data\",\"loginUser\":\"options\",\"registerUser\":\"options\",\"falseActiveUser\":\"options\",\"recallRanking\":\"options\"}");
 
 
 /***/ }),
@@ -34559,18 +34672,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/GameComponent.vue?vue&type=template&id=5cec6160&scoped=true&bindings={\"player_name\":\"data\",\"player_id\":\"data\",\"rolls\":\"data\"}":
-/*!***************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/GameComponent.vue?vue&type=template&id=5cec6160&scoped=true&bindings={"player_name":"data","player_id":"data","rolls":"data"} ***!
-  \***************************************************************************************************************************************************************/
+/***/ "./resources/js/components/GameComponent.vue?vue&type=template&id=5cec6160&scoped=true&bindings={\"player_name\":\"data\",\"player_id\":\"data\",\"rolls\":\"data\",\"player_percentage\":\"data\",\"value_dice_1\":\"data\",\"value_dice_2\":\"data\",\"value_total\":\"data\",\"img_dice_1\":\"data\",\"img_dice_2\":\"data\",\"onClickDestroy\":\"options\",\"onClickLogout\":\"options\",\"selectDiceValue\":\"options\",\"onClickRoll\":\"options\",\"getImage\":\"options\",\"image1\":\"options\"}":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/GameComponent.vue?vue&type=template&id=5cec6160&scoped=true&bindings={"player_name":"data","player_id":"data","rolls":"data","player_percentage":"data","value_dice_1":"data","value_dice_2":"data","value_total":"data","img_dice_1":"data","img_dice_2":"data","onClickDestroy":"options","onClickLogout":"options","selectDiceValue":"options","onClickRoll":"options","getImage":"options","image1":"options"} ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_GameComponent_vue_vue_type_template_id_5cec6160_scoped_true_bindings_player_name_data_player_id_data_rolls_data___WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_GameComponent_vue_vue_type_template_id_5cec6160_scoped_true_bindings_player_name_data_player_id_data_rolls_data_player_percentage_data_value_dice_1_data_value_dice_2_data_value_total_data_img_dice_1_data_img_dice_2_data_onClickDestroy_options_onClickLogout_options_selectDiceValue_options_onClickRoll_options_getImage_options_image1_options___WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_GameComponent_vue_vue_type_template_id_5cec6160_scoped_true_bindings_player_name_data_player_id_data_rolls_data___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./GameComponent.vue?vue&type=template&id=5cec6160&scoped=true&bindings={"player_name":"data","player_id":"data","rolls":"data"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/GameComponent.vue?vue&type=template&id=5cec6160&scoped=true&bindings={\"player_name\":\"data\",\"player_id\":\"data\",\"rolls\":\"data\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_GameComponent_vue_vue_type_template_id_5cec6160_scoped_true_bindings_player_name_data_player_id_data_rolls_data_player_percentage_data_value_dice_1_data_value_dice_2_data_value_total_data_img_dice_1_data_img_dice_2_data_onClickDestroy_options_onClickLogout_options_selectDiceValue_options_onClickRoll_options_getImage_options_image1_options___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./GameComponent.vue?vue&type=template&id=5cec6160&scoped=true&bindings={"player_name":"data","player_id":"data","rolls":"data","player_percentage":"data","value_dice_1":"data","value_dice_2":"data","value_total":"data","img_dice_1":"data","img_dice_2":"data","onClickDestroy":"options","onClickLogout":"options","selectDiceValue":"options","onClickRoll":"options","getImage":"options","image1":"options"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/GameComponent.vue?vue&type=template&id=5cec6160&scoped=true&bindings={\"player_name\":\"data\",\"player_id\":\"data\",\"rolls\":\"data\",\"player_percentage\":\"data\",\"value_dice_1\":\"data\",\"value_dice_2\":\"data\",\"value_total\":\"data\",\"img_dice_1\":\"data\",\"img_dice_2\":\"data\",\"onClickDestroy\":\"options\",\"onClickLogout\":\"options\",\"selectDiceValue\":\"options\",\"onClickRoll\":\"options\",\"getImage\":\"options\",\"image1\":\"options\"}");
 
 
 /***/ }),
@@ -34626,10 +34739,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/AdminComponent.vue?vue&type=template&id=a603f2ce&bindings={\"activeUser\":\"data\",\"players\":\"data\",\"loginUser\":\"options\",\"registerUser\":\"options\"}":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/AdminComponent.vue?vue&type=template&id=a603f2ce&bindings={"activeUser":"data","players":"data","loginUser":"options","registerUser":"options"} ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/AdminComponent.vue?vue&type=template&id=a603f2ce&bindings={\"activeUser\":\"data\",\"players\":\"data\",\"loginUser\":\"options\",\"registerUser\":\"options\",\"falseActiveUser\":\"options\",\"recallRanking\":\"options\"}":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/AdminComponent.vue?vue&type=template&id=a603f2ce&bindings={"activeUser":"data","players":"data","loginUser":"options","registerUser":"options","falseActiveUser":"options","recallRanking":"options"} ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -34662,11 +34775,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
     ($data.activeUser)
-      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_game_component, { key: 0 }))
+      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_game_component, {
+          key: 0,
+          onLogout: $options.falseActiveUser,
+          onReloadRanking: $options.recallRanking
+        }, null, 8 /* PROPS */, ["onLogout", "onReloadRanking"]))
       : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_2, [
           (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [
             (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_form_component, { onNew: $options.loginUser }, null, 8 /* PROPS */, ["onNew"]),
-            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" minuto 32:19 del vídeo "),
             (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_form_component2, { onNew: $options.registerUser }, null, 8 /* PROPS */, ["onNew"])
           ]),
           (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [
@@ -34843,10 +34959,10 @@ const render = /*#__PURE__*/_withId((_ctx, _cache, $props, $setup, $data, $optio
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/GameComponent.vue?vue&type=template&id=5cec6160&scoped=true&bindings={\"player_name\":\"data\",\"player_id\":\"data\",\"rolls\":\"data\"}":
-/*!************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/GameComponent.vue?vue&type=template&id=5cec6160&scoped=true&bindings={"player_name":"data","player_id":"data","rolls":"data"} ***!
-  \************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/GameComponent.vue?vue&type=template&id=5cec6160&scoped=true&bindings={\"player_name\":\"data\",\"player_id\":\"data\",\"rolls\":\"data\",\"player_percentage\":\"data\",\"value_dice_1\":\"data\",\"value_dice_2\":\"data\",\"value_total\":\"data\",\"img_dice_1\":\"data\",\"img_dice_2\":\"data\",\"onClickDestroy\":\"options\",\"onClickLogout\":\"options\",\"selectDiceValue\":\"options\",\"onClickRoll\":\"options\",\"getImage\":\"options\",\"image1\":\"options\"}":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/GameComponent.vue?vue&type=template&id=5cec6160&scoped=true&bindings={"player_name":"data","player_id":"data","rolls":"data","player_percentage":"data","value_dice_1":"data","value_dice_2":"data","value_total":"data","img_dice_1":"data","img_dice_2":"data","onClickDestroy":"options","onClickLogout":"options","selectDiceValue":"options","onClickRoll":"options","getImage":"options","image1":"options"} ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -34860,37 +34976,20 @@ const _withId = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.withScopeId)("d
 
 ;(0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-5cec6160")
 const _hoisted_1 = { id: "game-component" }
-const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", { class: "\r\n                tablero-juego\r\n                d-flex\r\n                align-items-center\r\n                justify-content-around\r\n            " }, [
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", { class: "dados d-flex justify-content-around" }, [
-    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
-      class: "dice p-2",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Dice-1-b.svg/836px-Dice-1-b.svg.png"
-    }),
-    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
-      class: "dice p-2",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Dice-2-b.svg/836px-Dice-2-b.svg.png"
-    }),
-    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("\r\n                <img\r\n                    class=\"dice p-2\"\r\n                    src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Dice-3-b.svg/1024px-Dice-3-b.svg.png\"\r\n                />\r\n                <img\r\n                    class=\"dice p-2\"\r\n                    src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Dice-4-b.svg/557px-Dice-4-b.svg.png\"\r\n                />\r\n                <img\r\n                    class=\"dice p-2\"\r\n                    src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Dice-5-b.svg/1200px-Dice-5-b.svg.png\"\r\n                />\r\n                <img\r\n                    class=\"dice p-2\"\r\n                    src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Dice-6-b.svg/768px-Dice-6-b.svg.png\"\r\n                />\r\n                ")
-  ])
-], -1 /* HOISTED */)
-const _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  class: "botones btn-group",
-  role: "group",
-  "aria-label": "Basic example"
-}, [
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    type: "button",
-    class: "btn btn-outline-dark"
-  }, " Lanzar dados "),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    type: "button",
-    class: "btn btn-outline-dark"
-  }, " Salir del juego ")
-], -1 /* HOISTED */)
-const _hoisted_4 = { class: "resultados" }
-const _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h4", null, "Tus resultados", -1 /* HOISTED */)
-const _hoisted_6 = { class: "table table-hover table-secondary" }
-const _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [
+const _hoisted_2 = { class: "\r\n                tablero-juego\r\n                d-flex\r\n                align-items-center\r\n                justify-content-around\r\n            " }
+const _hoisted_3 = { class: "dados d-flex justify-content-around" }
+const _hoisted_4 = { class: "botones" }
+const _hoisted_5 = {
+  class: "btn-group btn-group-justified",
+  role: "group"
+}
+const _hoisted_6 = { class: "btn-group" }
+const _hoisted_7 = { class: "btn-group" }
+const _hoisted_8 = { class: "btn-group" }
+const _hoisted_9 = { class: "resultados" }
+const _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h4", null, "Tus resultados", -1 /* HOISTED */)
+const _hoisted_11 = { class: "table table-hover table-secondary" }
+const _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", null, [
     /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { scope: "col" }, "#"),
     /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { scope: "col" }, "Lanzamiento"),
@@ -34900,46 +34999,76 @@ const _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)
     /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { scope: "col" }, "Resultado")
   ])
 ], -1 /* HOISTED */)
-const _hoisted_8 = { scope: "row" }
-const _hoisted_9 = { key: 0 }
-const _hoisted_10 = { key: 1 }
-const _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-  type: "button",
-  class: "btn btn-outline-dark"
-}, " Eliminar partidas ", -1 /* HOISTED */)
-const _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h4", null, "Porcentaje de éxitos", -1 /* HOISTED */)
-const _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, "22%", -1 /* HOISTED */)
+const _hoisted_13 = { scope: "row" }
+const _hoisted_14 = { key: 0 }
+const _hoisted_15 = { key: 1 }
 ;(0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)()
 
 const render = /*#__PURE__*/_withId((_ctx, _cache, $props, $setup, $data, $options) => {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h1", null, "¡Bienvenido/a " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.player_name) + "!", 1 /* TEXT */),
-    _hoisted_2,
-    _hoisted_3,
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h1", null, "¡Hola " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.player_name) + "!", 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, "Tu porcentaje de éxitos es del " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.player_percentage) + "%", 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+          id: "dice_1",
+          class: "dice p-2",
+          src: $options.image1
+        }, null, 8 /* PROPS */, ["src"]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+          id: "dice_2",
+          class: "dice p-2",
+          src: $data.img_dice_2
+        }, null, 8 /* PROPS */, ["src"]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("\r\n                <img\r\n                    class=\"dice p-2\"\r\n                    src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Dice-1-b.svg/836px-Dice-1-b.svg.png\"\r\n                />\r\n                <img\r\n                    class=\"dice p-2\"\r\n                    src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Dice-2-b.svg/836px-Dice-2-b.svg.png\"\r\n                />\r\n                <img\r\n                    class=\"dice p-2\"\r\n                    src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Dice-3-b.svg/1024px-Dice-3-b.svg.png\"\r\n                />\r\n                <img\r\n                    class=\"dice p-2\"\r\n                    src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Dice-4-b.svg/557px-Dice-4-b.svg.png\"\r\n                />\r\n                <img\r\n                    class=\"dice p-2\"\r\n                    src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Dice-5-b.svg/1200px-Dice-5-b.svg.png\"\r\n                />\r\n                <img\r\n                    class=\"dice p-2\"\r\n                    src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Dice-6-b.svg/768px-Dice-6-b.svg.png\"\r\n                />\r\n                ")
+      ])
+    ]),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [
-      _hoisted_5,
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_6, [
-        _hoisted_7,
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+            type: "button",
+            class: "btn btn-dark",
+            onClick: _cache[1] || (_cache[1] = $event => ($options.onClickRoll()))
+          }, " Lanzar dados ")
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+            type: "button",
+            class: "btn btn-dark",
+            onClick: _cache[2] || (_cache[2] = $event => ($options.onClickDestroy()))
+          }, " Eliminar partidas ")
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+            type: "button",
+            class: "btn btn-dark",
+            onClick: _cache[3] || (_cache[3] = $event => ($options.onClickLogout()))
+          }, " Salir del juego ")
+        ])
+      ])
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [
+      _hoisted_10,
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_11, [
+        _hoisted_12,
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [
           ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.rolls, (roll) => {
             return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", {
               key: roll.id
             }, [
-              (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(roll.id), 1 /* TEXT */),
+              (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(roll.id), 1 /* TEXT */),
               (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(roll.created_at), 1 /* TEXT */),
               (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(roll.result_dice_1), 1 /* TEXT */),
               (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(roll.result_dice_2), 1 /* TEXT */),
               (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(roll.result_total), 1 /* TEXT */),
               (roll.result_total == 7)
-                ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_9, "¡exito!"))
-                : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_10, "¡fracaso!"))
+                ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_14, "¡exito!"))
+                : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_15, "¡fracaso!"))
             ]))
           }), 128 /* KEYED_FRAGMENT */))
         ])
-      ]),
-      _hoisted_11,
-      _hoisted_12,
-      _hoisted_13
+      ])
     ])
   ]))
 })

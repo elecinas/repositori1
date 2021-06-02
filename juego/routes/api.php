@@ -28,6 +28,7 @@ Route::group(['middleware' => ['jwt.auth']], function(){
 
     Route::prefix('/players')->group(function () {
         Route::put('/{id}', [PlayersController::class, 'update'])->name('players.update');
+        Route::get('/{id}/percentage', [GamesController::class, 'playerPercentage'])->name('games.percentage');
         Route::get('/{id}/games', [GamesController::class, 'index'])->name('games.index');
         Route::post('/{id}/games', [GamesController::class, 'create'])->name('games.create');
         Route::delete('/{id}/games', [GamesController::class, 'destroy'])->name('games.destroy');

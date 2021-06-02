@@ -90,4 +90,16 @@ class GamesController extends Controller
 
         return response()->json(['winner' => $winner, 'percentage' => $val_min], 200);
     }
+
+    public function playerPercentage($id){
+        //percentatge d'un jugador
+        $players_array = $this->playersResults();//trait PlayersArray.php
+        foreach ($players_array as &$player){
+            if($player['id'] == $id){
+                $percentage = $player['percentage'];
+            }
+        }
+        
+        return $percentage;
+    }
 }
