@@ -16596,18 +16596,46 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      activeUser: true,
+      activeUser: false,
       players: []
     };
   },
   mounted: function mounted() {
     var _this = this;
 
+    //localStorage.clear();
+    //this.activeUser = false;
+
+    /**
+     * comprobamos que existe un token  para que la sesión de usuario siga activa
+     */
     if (localStorage.getItem("player_token")) {
-      this.activeUser = true;
+      //colocamos el bearer token
+      axios.defaults.headers.common = {
+        Authorization: "Bearer " + localStorage.getItem("player_token")
+      }; //refresca el token
+
+      axios.post("api/refresh/").then(function (response) {
+        console.log(response.data.token, "RETOKENNNN");
+
+        if (response.data.success) {
+          localStorage.setItem("player_token", response.data.token);
+        } else {
+          localStorage.clear();
+          _this.activeUser = false;
+        }
+      });
     } else {
       this.activeUser = false;
     }
+    /**al salir del navegador se limpia localStorage */
+
+    /*
+    window.addEventListener("beforeunload", function (event) {
+    localStorage.clear();
+    });
+    */
+
 
     axios.get("api/players/ranking").then(function (response) {
       _this.players = response.data;
@@ -16933,7 +16961,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.table_pack[data-v-a603f2ce]{\r\n    margin-top: 2rem;\r\n    margin-bottom: -2rem;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.table_pack[data-v-a603f2ce] {\r\n    margin-top: 2rem;\r\n    margin-bottom: -2rem;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

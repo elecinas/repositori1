@@ -4,7 +4,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     
-    <title>Tasca Srint 14 - Laravel</title>
+    <title>Tasca Srint 15 - Laravel</title>
 
     <link rel="canonical" href="{{ asset('https://getbootstrap.com/docs/5.0/examples/navbar-fixed/') }}">
     

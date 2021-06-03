@@ -59,7 +59,7 @@ class TokenController extends Controller
         } catch(TokenBlacklistedException $ex){
             return response()->json([
                 'success' => false,
-                'message' => 'Need to ligin again! (blacklisted)'
+                'message' => 'Need to login again! (blacklisted)'
             ], status:422);
         }
     }

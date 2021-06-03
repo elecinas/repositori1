@@ -47,18 +47,42 @@ export default {
     },
     data() {
         return {
-            activeUser: true,
+            activeUser: false,
             players: [],
         };
     },
 
     mounted() {
+        //localStorage.clear();
+        //this.activeUser = false;
+        /**
+         * comprobamos que existe un token  para que la sesión de usuario siga activa
+         */
         if (localStorage.getItem("player_token")) {
-            this.activeUser = true;
+            //colocamos el bearer token
+            axios.defaults.headers.common = {
+                Authorization: "Bearer " + localStorage.getItem("player_token"),
+            };
+            //refresca el token
+            axios
+                .post("api/refresh/")
+                .then((response) => {
+                    console.log(response.data.token, "RETOKENNNN");
+                    if (response.data.success) {
+                        localStorage.setItem("player_token", response.data.token);
+                    } else {
+                        localStorage.clear();
+                        this.activeUser = false;
+                    }
+                });
         } else {
             this.activeUser = false;
         }
-
+        /**al salir del navegador se limpia localStorage */ /*
+        window.addEventListener("beforeunload", function (event) {
+            localStorage.clear();
+        });
+        */
         axios
             .get("api/players/ranking")
             .then((response) => {
@@ -115,7 +139,7 @@ export default {
 </script>
 
 <style scoped>
-.table_pack{
+.table_pack {
     margin-top: 2rem;
     margin-bottom: -2rem;
 }
